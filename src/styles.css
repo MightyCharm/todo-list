@@ -1,3 +1,157 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    font-family: inherit;
+}
+
+:root {
+    --button-background: #1a97ea;
+    --button-color: #fff;
+    --button-background-hover: #1887d1;
+}
+
 body {
-    background-color: rgb(81, 63, 202);
+    background-color: #fff;
+}
+
+/* main container */
+.container {
+    height: 100vh;
+    width: 100vw;
+
+    display: grid;
+    grid-template-rows: 1fr 12fr;
+    grid-template-columns: 1fr 3fr;
+    color: black;
+}
+
+/* top container */
+.header {
+    display: grid;
+    align-items: center;
+    padding-left: 1rem;
+
+    /* border: 1px solid red; */
+    border-bottom: 1px solid #000;
+    grid-column: 1 / 3;
+
+    font-size: 2rem;
+}
+
+/* left side container */
+.project {
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+    justify-items: center;
+    align-items: center;
+
+    /* background: blue; */
+    border-right: 1px solid #000;
+}
+
+/* top left side */
+.project-option {
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    justify-items: center;
+    align-items: center;
+
+    border: 1px solid #000;
+    border-radius: 4px;
+    width: 90%;
+    height: 50%;
+}
+
+.text-option {
+    text-align: center;
+}
+
+.button-option {
+    width: 80%;
+    height: 40%;
+    border: none;
+    background-color: var(--button-background);
+    color: var(--button-color);
+}
+
+.button-option:hover {
+    background-color: var(--button-background-hover);
+}
+
+/* mid left side */
+.project-display {
+    align-self: start;
+
+    display: grid;
+    grid-auto-rows: 40px;
+    row-gap: 0.5rem;
+    justify-items: center;
+    align-items: center;
+
+    border: 1px solid #000;
+    border-radius: 4px;
+    width: 90%;
+    height: 100%;
+}
+
+.text-display {
+
+}
+
+.button-project {
+    width: 50%;
+    min-height: 30px;
+    border: none;
+    background-color: var(--button-background);
+    color: var(--button-color);  
+}
+
+.button-project:hover {
+    background-color: var(--button-background-hover);
+}
+
+/* right side container */
+.todo {
+    display: grid;
+    justify-items: center;
+    align-items: start;
+    padding-top: 1rem;
+    /* background: green; */
+}
+
+.todo-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+
+    border: 1px solid black;
+    background-color: #fff;
+    border-radius: 5px;
+    height: 10%;
+    width: 90%;
+}
+
+.todo-card-label-checkbox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.checkbox-done  {
+    
+}
+
+.btn-delete {
+    background-color: rgb(250, 2, 2);
+    color: #fff;
+    border: none;
+    min-width: 20px;
+    min-height: 20px;
+}
+
+.btn-delete:hover {
+    background-color: rgb(178, 23, 23);
 }
