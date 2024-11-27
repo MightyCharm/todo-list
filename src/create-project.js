@@ -1,21 +1,7 @@
 
-// if program runs first, default folder will be created
-export function createDefaultProject() {
-    const projectDisplay = document.querySelector("#project-display");
-
-    const buttonProject = document.createElement("button");
-    buttonProject.className = "button-new-project";
-    buttonProject.innerHTML = "default";
-
-    buttonProject.addEventListener("click", () => {
-        displayToDoList();
-    })
-
-    projectDisplay.append(buttonProject);
-}
 
 // function creates (opens) new window so user can create new projects
-export function createNewProject() {
+export function createNewProjectWindow() {
     // get main container
     const container = document.querySelector("#container");
 
@@ -46,13 +32,13 @@ export function createNewProject() {
     label.className = "create-project-label";
     input.className = "create-project-input";
     input.id = "create-project-input"
+    input.maxLength = 15;
     // connect label with input field using for attribute
     label.htmlFor = input.id;
 
     input.setAttribute("type", "text");
     label.innerHTML = "Project Name";
 
-    
     form.append(label);
     form.append(input);
 
@@ -66,23 +52,13 @@ export function createNewProject() {
         closeWindowCreateProject();
     })
     
- 
     divCreateProject.append(header);
     divCreateProject.append(buttonClose);
     divCreateProject.append(form);
     divCreateProject.append(buttonConfirm);
 
     // append window created to main container
-    container.append(divCreateProject);
-
-    
-}
-
-// function removes window for creating a new project
-function closeWindowCreateProject() {
-    const container = document.querySelector("#container");
-    const window = document.querySelector("#create-project");
-    container.removeChild(window);
+    container.append(divCreateProject); 
 }
 
 // function creates a new div project and appends to container
@@ -94,17 +70,25 @@ function getProjectName() {
 
     // create new div project
     const buttonProject = document.createElement("button");
+    buttonProject.id = "button-new-project";
     buttonProject.className = "button-new-project";
     buttonProject.innerHTML = input.value;
 
     buttonProject.addEventListener("click", () => {
         displayToDoList();
     })
-
+    displayToDoList() // first load if button is created
     container.append(buttonProject);
 }
 
+// function removes window for creating a new project
+function closeWindowCreateProject() {
+    const container = document.querySelector("#container");
+    const window = document.querySelector("#create-project");
+    container.removeChild(window);
+}
+
 // function will be used from project buttons to display the todo List
-function displayToDoList() {
+export function displayToDoList() {
     console.log("I should display something");
 }
