@@ -9,4 +9,3 @@ export function todo(projectName, title, description, dueDate, priority) {
         priority,
     }
 }
-

@@ -1,16 +1,21 @@
 import "./styles.css";
-import { todo } from "./create-todo.js"
-import { createNewProjectWindow, displayToDoList } from "./create-project";
+import { createDefaultProject } from "./create-project.js";
+import { displayProjectWindow, displayToDoWindow } from "./render.js";
+
+// create default project on first load
+createDefaultProject();
+
 
 // get button create from main page
-const buttonCreate = document.querySelector("#button-create")
+const buttonCreate = document.querySelector("#button-create");
+const buttonAdd = document.querySelector("#button-add");
 // add eventlistener for button create
 buttonCreate.addEventListener("click", () => {
-     createNewProjectWindow();
+    displayProjectWindow();
 })
 
-// append eventlistener to button project default
-const buttonDefault = document.querySelector("#button-new-project");
-buttonDefault.addEventListener("click", () => {
-     displayToDoList();
+buttonAdd.addEventListener("click", () => {
+    displayToDoWindow();
 })
+
+
