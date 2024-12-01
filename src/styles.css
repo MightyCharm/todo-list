@@ -85,6 +85,10 @@ body {
     background-color: var(--button-background-hover);
 }
 
+.button-option:disabled {
+    background-color: var(--button-background-disabled);
+}
+
 /* mid left side */
 .project-display {
     align-self: start;

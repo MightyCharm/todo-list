@@ -1,8 +1,15 @@
 /* module renders windows for project and todo creation */
 import { createProject } from "./create-project.js";
 
+const OPEN_WINDOW = "openWindow";
+const CLOSE_WINDOW = "closeWindow";
+
+
+/* WINDOW CREATE PROJECTS */
 // function creates (opens) new window so user can create new projects
-export function displayProjectWindow() {
+export function openWindowProject() {
+    // set button state
+    setButtonState(OPEN_WINDOW);
     // get main container
     const container = document.querySelector("#container");
 
@@ -21,7 +28,7 @@ export function displayProjectWindow() {
     buttonClose.className = "button-close";
     buttonClose.innerHTML = "X";
     buttonClose.addEventListener("click", () => {
-        closeWindowCreateProject();
+        closeWindowProject();
     });
 
     // create label and input field so user can enter name of new project
@@ -37,7 +44,7 @@ export function displayProjectWindow() {
     input.placeholder = "Enter name and press confirm";
 
     input.addEventListener("input", () => {
-        validateInputProjectWindow();
+        validateInputWindowProject();
     })
     // connect label with input field using for attribute
     label.htmlFor = input.id;
@@ -57,7 +64,7 @@ export function displayProjectWindow() {
 
     buttonConfirm.addEventListener("click", () => {
         createProject();
-        closeWindowCreateProject();
+        closeWindowProject();
     })
     
     divCreateProject.append(header);
@@ -67,26 +74,18 @@ export function displayProjectWindow() {
 
     // append window created to main container
     container.append(divCreateProject);
-
-    // change button state for ADD-TO-Do to false,
-    // so if window create project is open, user cannot open another window
-    const buttonAddToDo = document.querySelector("#button-add");
-    buttonAddToDo.disabled = true;
 }
 
 // function removes window for creating a new project
-function closeWindowCreateProject() {
+function closeWindowProject() {
+    // set button state
+    setButtonState(CLOSE_WINDOW);
     const container = document.querySelector("#container");
     const window = document.querySelector("#create-project");
     container.removeChild(window);
-
-    // if window create project is closed, button for window add to do
-    // can be active again, so user can open this window again
-    const buttonAddToDo = document.querySelector("#button-add");
-    buttonAddToDo.disabled = false;
 }
 
-function validateInputProjectWindow() {
+function validateInputWindowProject() {
     const buttonConfirm = document.querySelector("#button-confirm");
     const input = document.querySelector("#create-project-input");
     console.log(input.value.length);
@@ -99,8 +98,11 @@ function validateInputProjectWindow() {
 
 }
 
+/* WINDOW CREATE TO-DO's */
 // function create (opens) new window so user can create a new todo for the selected project
-export function displayToDoWindow() {
+export function openWindowToDo() {
+    // set button states
+    setButtonState(OPEN_WINDOW);
     // get container
     const container = document.querySelector("#container");
 
@@ -119,7 +121,7 @@ export function displayToDoWindow() {
     buttonClose.className = "button-close";
     buttonClose.innerHTML = "X";
     buttonClose.addEventListener("click", () => {
-        closeWindowCreateToDo();
+        closeWindowToDo();
     });
 
     // create form for label and input
@@ -187,7 +189,7 @@ export function displayToDoWindow() {
  
      buttonConfirm.addEventListener("click", () => {
         // createProject();
-        closeWindowCreateToDo();
+        closeWindowToDo();
      })
 
     divCreateToDo.append(header);
@@ -195,14 +197,63 @@ export function displayToDoWindow() {
     divCreateToDo.append(form);
     divCreateToDo.append(buttonConfirm);
 
-    
     container.append(divCreateToDo);
 }
 
-function closeWindowCreateToDo() {
+function closeWindowToDo() {
+    //set button state
+    setButtonState(CLOSE_WINDOW);
     const container = document.querySelector("#container");
     const window = document.querySelector("#create-todo");
     container.removeChild(window);
+
+    const buttonCreate = document.querySelector("#button-create");
+    const buttonDelete = document.querySelector("#button-delete");
+    const buttonAddToDo = document.querySelector("#button-add");
+    buttonCreate.disabled = false;
+    buttonDelete.disabled = false;
+    buttonAddToDo.disabled = false;
+}
+
+function validateInputToDoWindow() {
+    console.log("Here I am");
+}
+
+/* later I have to disabled project buttons to */
+function setButtonState(window) {
+    const buttonCreate = document.querySelector("#button-create");
+    const buttonDelete = document.querySelector("#button-delete");
+    const buttonAddToDo = document.querySelector("#button-add");
+    const buttonProjects = document.querySelectorAll("#button-new-project");
+
+    console.log(window);
+    switch (window) {
+        case "openWindow":
+            // disable buttons
+            buttonCreate.disabled = true;
+            buttonDelete.disabled = true;
+            buttonAddToDo.disabled = true;
+            buttonProjects.forEach( (button) => {
+                console.log(button);
+                button.disabled = true;
+            })
+            break;
+        case "closeWindow":
+            // enable buttons
+            buttonCreate.disabled = false;
+            buttonDelete.disabled = false;
+            buttonAddToDo.disabled = false;
+            buttonProjects.forEach( (button) => {
+                console.log(button);
+                button.disabled = false;
+            })
+            break;
+        default:
+            console.log("something went wrong");
+    }
+
+    
+
 }
 
 // function will be used from project buttons to display the todo List
