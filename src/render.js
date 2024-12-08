@@ -17,7 +17,7 @@ export function openWindowProject() {
     const divCreateProject = document.createElement("div");
     divCreateProject.className = "create-project";
     divCreateProject.id = "create-project"
-    
+
     // create info text for window
     const header = document.createElement("h2");
     header.className = "create-project-header";
@@ -35,42 +35,39 @@ export function openWindowProject() {
     const form = document.createElement("form");
     const label = document.createElement("label");
     const input = document.createElement("input");
+    const inputSubmit = document.createElement("input");
 
     form.className = "create-project-form";
     label.className = "create-project-label";
     input.className = "create-project-input";
+    inputSubmit.className = "input-submit"
+
     input.id = "create-project-input"
     input.maxLength = 15;
     input.placeholder = "Enter name and press confirm";
+    input.required = true;
 
-    input.addEventListener("input", () => {
-        validateInputWindowProject();
-    })
+
     // connect label with input field using for attribute
     label.htmlFor = input.id;
 
     input.setAttribute("type", "text");
     label.innerHTML = "Project Name";
 
+    inputSubmit.setAttribute("type", "submit");
+    inputSubmit.setAttribute("value", "Submit");
+
     form.append(label);
     form.append(input);
+    form.append(inputSubmit);
 
-    // create button for confirm input new project
-    const buttonConfirm = document.createElement("button");
-    buttonConfirm.className = "button-confirm";
-    buttonConfirm.id = "button-confirm";
-    buttonConfirm.innerHTML = "Confirm";
-    buttonConfirm.disabled = true;
-
-    buttonConfirm.addEventListener("click", () => {
-        createProject();
-        closeWindowProject();
+    form.addEventListener("submit", (event) => {
+        validateInputWindowProject(event);
     })
-    
+
     divCreateProject.append(header);
     divCreateProject.append(buttonClose);
     divCreateProject.append(form);
-    divCreateProject.append(buttonConfirm);
 
     // append window created to main container
     container.append(divCreateProject);
@@ -85,17 +82,11 @@ function closeWindowProject() {
     container.removeChild(window);
 }
 
-function validateInputWindowProject() {
-    const buttonConfirm = document.querySelector("#button-confirm");
-    const input = document.querySelector("#create-project-input");
-    console.log(input.value.length);
-
-    if(input.value.length > 0) {
-        buttonConfirm.disabled = false;
-    } else {
-        buttonConfirm.disabled = true;
-    }
-
+function validateInputWindowProject(e) {
+    e.preventDefault();
+    createProject();
+    closeWindowProject();
+    console.log("here we go again");
 }
 
 /* WINDOW CREATE TO-DO's */
@@ -127,6 +118,16 @@ export function openWindowToDo() {
     // create form for label and input
     const form = document.createElement("form");
     form.className = "create-todo-form";
+    
+    form.addEventListener("submit", (event) => {
+        validateInputToDoWindow(event);
+    })
+
+    // create container for label and input pair
+    const divTitle = document.createElement("div");
+    const divDescription = document.createElement("div");
+    const divDueDate = document.createElement("div");
+    const divPriority = document.createElement("div");
 
     // create labels
     const labelTitle = document.createElement("label");
@@ -138,68 +139,115 @@ export function openWindowToDo() {
     const inputTitle = document.createElement("input");
     const inputDescription = document.createElement("input");
     const inputDueDate = document.createElement("input");
-    const inputPriority = document.createElement("input");
+    // create select element with options as input
+    const selectPriority = document.createElement("select");
+    const optionLow = document.createElement("option");
+    const optionNormal = document.createElement("option");
+    const optionHigh = document.createElement("option");
+    const inputSubmit = document.createElement("input");
+
+    // set input required
+    inputTitle.required = true;
+    inputDescription.required = true;
+    inputDueDate.required = true;
+
+    // add class to container for labels and input
+    divTitle.classList = "create-todo-divContainer";
+    divDescription.classList = "create-todo-divContainer";
+    divDueDate.classList = "create-todo-divContainer";
+    divPriority.classList = "create-todo-divContainer";
 
     // add class to labels
     labelTitle.classList = "create-todo-label";
-    labelDescription.classList= "create-todo-label";
+    labelDescription.classList = "create-todo-label";
     labelDueDate.classList = "create-todo-label";
-    labelPriority.classList = "create-todo-label"; 
+    labelPriority.classList = "create-todo-label";
     // add class to inputs
     inputTitle.classList = "create-todo-input";
     inputDescription.classList = "create-todo-input";
-    inputDueDate.classList = "create-todo-input";
-    inputPriority.classList = "create-todo-input";
+    inputDueDate.classList = "create-todo-input create-todo-inputDueDate";
+    selectPriority.classList = "create-todo-selectPriority";
+    optionLow.classList = "create-todo-optionLow";
+    optionNormal.classList = "create-todo-optionNormal";
+    optionHigh.classList = "create-todo-optionHigh";
+    inputSubmit.classList = "input-submit input-submit-todo";
+
+    // add placeholder text to input
+    inputTitle.placeholder = "Enter your Title..."
+    inputDescription.placeholder = "Enter your Description..."
+
     // add text to labels
     labelTitle.innerHTML = "Title";
     labelDescription.innerHTML = "Description";
     labelDueDate.innerHTML = "Due Date";
-    labelPriority.innerHTML = "Priority"
+    labelPriority.innerHTML = "Priority";
+    optionLow.innerHTML = "LOW";
+    optionNormal.innerHTML = "NORMAL";
+    optionHigh.innerHTML = "HIGH";
+
     // add id to inputs
     inputTitle.id = "create-todo-input-title";
     inputDescription.id = "create-todo-input-description";
     inputDueDate.id = "create-todo-input-dueDate";
-    inputPriority.id = "create-todo-input-priority";
+    selectPriority.id = "create-todo-selectPriority";
 
     // connect labels with inputs
     labelTitle.htmlFor = inputTitle.id;
     labelDescription.htmlFor = inputDescription.id;
     labelDueDate.htmlFor = inputDueDate.id;
-    labelPriority.htmlFor = inputPriority.id;
+    labelPriority.htmlFor = selectPriority.id;
+
 
     // define type of input fields
     inputTitle.setAttribute("type", "text");
     inputDescription.setAttribute("type", "text");
-    inputDueDate.setAttribute("type", "text");
-    inputPriority.setAttribute("type", "text");
+    inputDueDate.setAttribute("type", "date");
+    selectPriority.setAttribute("name", "create-todo-selectPriority");
+    optionLow.setAttribute("value", "low");
+    optionNormal.setAttribute("value", "normal");
+    optionHigh.setAttribute("value", "high");
+    inputSubmit.setAttribute("type", "submit");
+    inputSubmit.setAttribute("value", "Submit");
 
-    form.append(labelTitle);
-    form.append(inputTitle);
-    form.append(labelDescription);
-    form.append(inputDescription);
-    form.append(labelDueDate);
-    form.append(inputDueDate);
-    form.append(labelPriority);
-    form.append(inputPriority);
 
-     // create button for confirm input new project
-     const buttonConfirm = document.createElement("button");
-     buttonConfirm.className = "button-confirm";
-     buttonConfirm.innerHTML = "Confirm";
- 
-     buttonConfirm.addEventListener("click", () => {
-        // createProject();
-        closeWindowToDo();
-     })
+    // append labels and input to their container
+    divTitle.append(labelTitle);
+    divTitle.append(inputTitle);
+    divDescription.append(labelDescription);
+    divDescription.append(inputDescription);
+    divDueDate.append(labelDueDate);
+    divDueDate.append(inputDueDate);
+
+    selectPriority.append(optionLow);
+    selectPriority.append(optionNormal);
+    selectPriority.append(optionHigh);
+    divPriority.append(labelPriority);
+    divPriority.append(selectPriority);
+
+    form.append(divTitle);
+    form.append(divDescription);
+    form.append(divDueDate);
+    form.append(divPriority);
+    form.append(inputSubmit);
 
     divCreateToDo.append(header);
     divCreateToDo.append(buttonClose);
     divCreateToDo.append(form);
-    divCreateToDo.append(buttonConfirm);
-
+    
     container.append(divCreateToDo);
+
+    // set default value for priority if window opens first time
+    selectPriority.value = "normal";
 }
 
+function validateInputToDoWindow(e) {
+    e.preventDefault();
+    closeWindowToDo();
+    console.log("Here I am");
+
+}
+
+/* removes window for todo's from DOM and changes button states */
 function closeWindowToDo() {
     //set button state
     setButtonState(CLOSE_WINDOW);
@@ -215,9 +263,6 @@ function closeWindowToDo() {
     buttonAddToDo.disabled = false;
 }
 
-function validateInputToDoWindow() {
-    console.log("Here I am");
-}
 
 /* later I have to disabled project buttons to */
 function setButtonState(window) {
@@ -233,7 +278,7 @@ function setButtonState(window) {
             buttonCreate.disabled = true;
             buttonDelete.disabled = true;
             buttonAddToDo.disabled = true;
-            buttonProjects.forEach( (button) => {
+            buttonProjects.forEach((button) => {
                 console.log(button);
                 button.disabled = true;
             })
@@ -243,7 +288,7 @@ function setButtonState(window) {
             buttonCreate.disabled = false;
             buttonDelete.disabled = false;
             buttonAddToDo.disabled = false;
-            buttonProjects.forEach( (button) => {
+            buttonProjects.forEach((button) => {
                 console.log(button);
                 button.disabled = false;
             })
@@ -252,7 +297,7 @@ function setButtonState(window) {
             console.log("something went wrong");
     }
 
-    
+
 
 }
 
