@@ -1,6 +1,9 @@
 /* module renders windows for project and todo creation */
-import { createProject } from "./create-project.js";
+import { createProject, lastActiveButton } from "./create-project.js";
+import { getInputNewToDo, getLastButtonPressed } from "./create-todo.js";
+import { data } from "./index.js";
 
+// sets button state, if  a window is open buttons in the background are deactivated
 const OPEN_WINDOW = "openWindow";
 const CLOSE_WINDOW = "closeWindow";
 
@@ -86,7 +89,6 @@ function validateInputWindowProject(e) {
     e.preventDefault();
     createProject();
     closeWindowProject();
-    console.log("here we go again");
 }
 
 /* WINDOW CREATE TO-DO's */
@@ -118,7 +120,7 @@ export function openWindowToDo() {
     // create form for label and input
     const form = document.createElement("form");
     form.className = "create-todo-form";
-    
+
     form.addEventListener("submit", (event) => {
         validateInputToDoWindow(event);
     })
@@ -233,7 +235,7 @@ export function openWindowToDo() {
     divCreateToDo.append(header);
     divCreateToDo.append(buttonClose);
     divCreateToDo.append(form);
-    
+
     container.append(divCreateToDo);
 
     // set default value for priority if window opens first time
@@ -242,9 +244,13 @@ export function openWindowToDo() {
 
 function validateInputToDoWindow(e) {
     e.preventDefault();
-    closeWindowToDo();
-    console.log("Here I am");
 
+    // get data
+    getInputNewToDo();
+
+    // create object
+
+    closeWindowToDo();
 }
 
 /* removes window for todo's from DOM and changes button states */
@@ -271,7 +277,7 @@ function setButtonState(window) {
     const buttonAddToDo = document.querySelector("#button-add");
     const buttonProjects = document.querySelectorAll("#button-new-project");
 
-    console.log(window);
+    // console.log(window);
     switch (window) {
         case "openWindow":
             // disable buttons
@@ -279,7 +285,6 @@ function setButtonState(window) {
             buttonDelete.disabled = true;
             buttonAddToDo.disabled = true;
             buttonProjects.forEach((button) => {
-                console.log(button);
                 button.disabled = true;
             })
             break;
@@ -289,7 +294,7 @@ function setButtonState(window) {
             buttonDelete.disabled = false;
             buttonAddToDo.disabled = false;
             buttonProjects.forEach((button) => {
-                console.log(button);
+                //console.log(button);
                 button.disabled = false;
             })
             break;
@@ -302,6 +307,21 @@ function setButtonState(window) {
 }
 
 // function will be used from project buttons to display the todo List
-export function renderToDoList() {
-    console.log("I should display something");
+export function renderToDoList(btn) {
+    console.log("function renderToDoList");
+    getLastButtonPressed(btn);
+
+    console.log("here-------");
+    for (let i = 0; i < data.length; i++) {
+        // console.log(data[i]["buttonId"]);
+        if(data[i]["buttonId"] == lastActiveButton.active) {
+            console.log(data[i]["buttonId"]);
+            console.log(data[i]["title"]);
+            console.log(data[i]["description"]);
+            console.log(data[i]["dueDate"]);
+            console.log(data[i]["priority"])
+        }
+    }
+
+    console.log(`last button pressed: ${lastActiveButton.active}`)
 }
