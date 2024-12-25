@@ -1,6 +1,6 @@
 import { data } from "./index.js";
 import { lastActiveButton } from "./create-project.js";
-import { renderToDoList } from "./render.js";
+import { checkForToDoList } from "./render.js";
 
 export function getInputNewToDo() {
     console.log("function getInputToDo");
@@ -19,9 +19,8 @@ export function getInputNewToDo() {
 
     data.push(obj);
     // after new todo was created, render todos again
-    renderToDoList(lastActiveButton.active);
+    checkForToDoList(lastActiveButton.active);
 }
-
 
 // factory function for creating todo's
 function todo(buttonId, title, description, dueDate, priority) {

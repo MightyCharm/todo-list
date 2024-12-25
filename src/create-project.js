@@ -1,6 +1,6 @@
-import { renderToDoList } from "./render.js"; // used to add eventlistener
+import { checkForToDoList } from "./render.js"; // used to add eventlistener
 
-/* will be used in id for button to identify them when pressed */
+/* will be used to create id for buttonProject */
 let buttonCount = 1
 
 export let lastActiveButton = { active: 'button-new-project-0' };
@@ -13,7 +13,7 @@ export function createDefaultProject() {
     buttonDefault.innerHTML = "default";
 
     buttonDefault.addEventListener("click", (btn) => {
-        renderToDoList(btn);
+        checkForToDoList(btn);
     })
 }
 
@@ -32,7 +32,7 @@ export function createProject() {
     buttonProject.innerHTML = input.value;
 
     buttonProject.addEventListener("click", (btn) => {
-        renderToDoList(btn);
+        checkForToDoList(btn);
     })
     container.append(buttonProject);
     buttonCount += 1;

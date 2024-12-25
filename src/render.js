@@ -306,22 +306,222 @@ function setButtonState(window) {
 
 }
 
-// function will be used from project buttons to display the todo List
-export function renderToDoList(btn) {
-    console.log("function renderToDoList");
+// function takes last button pressed (project) and searches for todos
+export function checkForToDoList(btn) {
+    console.log("function checkForToDoList");
     getLastButtonPressed(btn);
-
+    removeAllToDo();
     console.log("here-------");
     for (let i = 0; i < data.length; i++) {
-        // console.log(data[i]["buttonId"]);
-        if(data[i]["buttonId"] == lastActiveButton.active) {
-            console.log(data[i]["buttonId"]);
-            console.log(data[i]["title"]);
-            console.log(data[i]["description"]);
-            console.log(data[i]["dueDate"]);
-            console.log(data[i]["priority"])
+        // if this project has todos, call function to render
+        if (data[i]["buttonId"] == lastActiveButton.active) {
+            renderToDoList(data[i])
         }
     }
 
     console.log(`last button pressed: ${lastActiveButton.active}`)
+}
+
+// function will render todos found
+function renderToDoList(obj) {
+    console.log("function renderToDoList");
+    console.log(obj["buttonId"]);
+    const title = obj["title"];
+    const description = obj["description"];
+    const dueDate = obj["dueDate"];
+    const priority = obj["priority"];
+
+    const mainContainer = document.querySelector("#todo-list");
+
+    // create container for single todo
+    const divToDo = document.createElement("div");
+    divToDo.className = "todo";
+    divToDo.id = "todo";
+
+    // create todo-title
+    const divContainerTitle = document.createElement("div");
+    const divTitleText = document.createElement("div");
+    const divTitleInput = document.createElement("div");
+    // add classes
+    divContainerTitle.className = "todo-title";
+    divTitleText.className = "todo-title-text";
+    divTitleInput.className = "todo-title-input";
+    // add id
+    divContainerTitle.id = "todo-title";
+    divTitleText.id = "todo-title-text";
+    divTitleInput.id = "todo-title-input";
+    // add innerHTMl
+    divTitleText.innerHTML = "Title";
+    divTitleInput.innerHTML = title;
+
+    // append children to parent
+    divContainerTitle.append(divTitleText);
+    divContainerTitle.append(divTitleInput);
+
+
+    // create todo-description
+    const divContainerDescription = document.createElement("div");
+    const divDescriptionText = document.createElement("div");
+    const divDescriptionInput = document.createElement("div");
+
+    // add classes
+    divContainerDescription.className = "todo-description";
+    divDescriptionText.className = "todo-description-text";
+    divDescriptionInput.className = "todo-description-input";
+    // add id
+    divContainerDescription.id = "todo-description";
+    divDescriptionText.id = "todo-description-text";
+    divDescriptionInput.id = "todo-description-input";
+    // add innerHTML
+    divDescriptionText.innerHTML = "Description";
+    divDescriptionInput.innerHTML = description;
+    // append children to parent
+    divContainerDescription.append(divDescriptionText);
+    divContainerDescription.append(divDescriptionInput);
+
+
+    // create todo-dueDate
+    const divContainerDueDate = document.createElement("div");
+    const divDueDateText = document.createElement("div");
+    const divDueDateInput = document.createElement("div");
+    
+    // add classes
+    divContainerDueDate.className = "todo-dueDate";
+    divDueDateText.className = "todo-dueDate-text";
+    divDueDateInput.className = "todo-dueDate-input";
+    // add id
+    divContainerDueDate.id = "todo-dueDate";
+    divDueDateText.id = "todo-dueDate-text";
+    divDueDateInput.id = "todo-dueDate-input";
+    // add innerHTML
+    divDueDateText.innerHTML  = "Due Date";
+    divDueDateInput.innerHTML = dueDate;
+    // append children to parent
+    divContainerDueDate.append(divDueDateText);
+    divContainerDueDate.append(divDueDateInput);
+    
+
+    // create todo-priority
+    const divContainerPriority = document.createElement("div");
+    const divPriorityText = document.createElement("div");
+    const divPriorityInput = document.createElement("div");
+    // add classes
+    divContainerPriority.className = "todo-priority";
+    divPriorityText.className = "todo-priority-text";
+    divPriorityInput.className = "todo-priority-input";
+    // add id
+    divContainerPriority.id = "todo-priority";
+    divPriorityText.id = "todo-priority-text";
+    divPriorityInput.id = "todo-priority-input";
+    // add innerHTML
+    divPriorityText.innerHTML = "Priority";
+    divPriorityInput.innerHTML = priority;
+    // append children to parent
+    divContainerPriority.append(divPriorityText);
+    divContainerPriority.append(divPriorityInput);
+
+
+    // create todo-checkbox
+    const divContainerCheckbox = document.createElement("div");
+    divContainerCheckbox.className = "todo-checkbox";
+    divContainerCheckbox.id = "todo-checkbox";
+
+    // create left side of todo-checkbox 
+    const divContainerCheckboxStart = document.createElement("div");
+    const labelCheckBoxStartText = document.createElement("label");
+    const inputCheckBoxStart = document.createElement("input");
+    // add classes
+    divContainerCheckboxStart.className = "todo-checkbox-start";
+    labelCheckBoxStartText.className = "todo-checkbox-start-text";
+    inputCheckBoxStart.className = "todo-checkbox-start-input";
+    // add id
+    divContainerCheckboxStart.id = "todo-checkbox-start";
+    labelCheckBoxStartText.id = "todo-checkbox-start-text";
+    inputCheckBoxStart.id = "todo-checkbox-start-input";
+    // add innerHTML
+    labelCheckBoxStartText.innerHTML = "DONE";
+    // set input type to checkbox
+    inputCheckBoxStart.setAttribute("type", "checkbox");
+    inputCheckBoxStart.setAttribute("name", "checkbox-done");
+    inputCheckBoxStart.setAttribute("value", "done");
+    // connect label and checkbox
+    labelCheckBoxStartText.htmlFor = inputCheckBoxStart.id;
+    // append children to parent 
+    divContainerCheckboxStart.append(labelCheckBoxStartText);
+    divContainerCheckboxStart.append(inputCheckBoxStart);
+
+    // create right side of todo-checkbox
+    const divContainerCheckboxEnd = document.createElement("div");
+    const labelCheckBoxEndText = document.createElement("label");
+    const buttonCheckBoxEnd = document.createElement("button");
+    // add classes
+    divContainerCheckboxEnd.className = "todo-checkbox-end";
+    labelCheckBoxEndText.className = "todo-checkbox-end-text";
+    buttonCheckBoxEnd.className = "todo-checkbox-end-button";
+    // add id
+    divContainerCheckboxEnd.id = "todo-checkbox-end";
+    labelCheckBoxEndText.id = "todo-checkbox-end-text";
+    buttonCheckBoxEnd.id = "todo-checkbox-end-button";
+    // add innerHTML
+    labelCheckBoxEndText.innerHTML = "REMOVE";
+    buttonCheckBoxEnd.innerHTML = "X";
+    // append children to parent
+    divContainerCheckboxEnd.append(labelCheckBoxEndText);
+    divContainerCheckboxEnd.append(buttonCheckBoxEnd);
+
+    // append children to parent
+    divContainerCheckbox.append(divContainerCheckboxStart);
+    divContainerCheckbox.append(divContainerCheckboxEnd);
+    
+    /*
+    <div class="todo" id="todo">
+        <div class="todo-title" id="todo-title">
+            <div class="todo-title-text" id="todo-title-text">Title</div>
+            <div class="todo-title-input" id="todo-title-input">workout</div>
+        </div>
+        <div class="todo-description" id="todo-description">
+            <div class="todo-description-text" id="todo-description-text">Description</div>
+            <div class="todo-description-input" id="todo-description-input">training with friend in park</div>
+        </div>
+        <div class="todo-dueDate" id="todo-dueDate">
+            <div class="todo-dueDate-text" id="todo-dueDate-text">due Date</div>
+            <div class="todo-dueDate-input" id="todo-dueDate-input">12.01.2025</div>
+        </div>
+        <div class="todo-priority" id="todo-priority">
+            <div class="todo-priority-text" id="todo-priority-text">Priority</div>
+            <div class="todo-priority-input" id="todo-priority-input">Normal</div>
+        </div>
+
+        <div class="todo-checkbox" id="todo-checkbox">
+            <div class="todo-checkbox-start" id="todo-checkbox-start">
+                <label class="todo-checkbox-start-text" id="todo-checkbox-start-text" for="todo-done">DONE</label>
+                <input class="todo-checkbox-start-input" id="todo-checkbox-start-box" type="checkbox" name="checkbox-done" value="done">
+            </div>
+
+            <div class="todo-checkbox-end" id="todo-checkbox-end">
+                <div class="todo-checkbox-end-text" id="todo-checkbox-end-text">Remove</div>
+                <button class="todo-checkbox-end-button" id="todo-checkbox-end-button">X</button>
+            </div>
+        </div>
+    </div>
+    */
+
+    
+    divToDo.append(divContainerTitle);
+    divToDo.append(divContainerDescription);
+    divToDo.append(divContainerDueDate);
+    divToDo.append(divContainerPriority);
+    divToDo.append(divContainerCheckbox);
+
+    mainContainer.append(divToDo);
+}
+
+// function will remove all todos from todo-list before rendering
+function removeAllToDo() {
+    console.log("function removeAllToDo");
+    const todoList = document.querySelector("#todo-list");
+
+    while(todoList.firstChild) {
+        todoList.removeChild(todoList.firstChild);
+    }
 }

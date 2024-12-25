@@ -14,6 +14,7 @@
     --button-2-background: deeppink;
     --button-2-background-hover: rgb(255, 42, 155);
     --border-radius: 4px;
+    --background-color-todo-text: rgb(181, 181, 181);
 }
 
 body {
@@ -32,7 +33,7 @@ body {
 }
 
 /* top container */
-.header {
+.header-section {
     display: grid;
     align-items: center;
     padding-left: 1rem;
@@ -45,7 +46,7 @@ body {
 }
 
 /* left side container */
-.project {
+.project-section {
     display: grid;
     grid-template-rows: 1fr 3fr;
     justify-items: center;
@@ -121,13 +122,13 @@ body {
 }
 
 /* right side container */
-.todo {
+.todo-section {
     display: grid;
     justify-items: center;
     align-items: start;
     padding-top: 1rem;
-    grid-template-rows: 1fr 10fr;
-    /* background: green; */
+    grid-template-rows: 1fr 10fr;  
+    row-gap: 1rem;
 }
 
 /* contains text and button */
@@ -181,7 +182,9 @@ body {
     grid-template-columns: 1fr 1fr;
 }
 
-.checkbox-done {}
+.checkbox-done {
+
+}
 
 .btn-delete {
     background-color: rgb(250, 2, 2);
@@ -246,7 +249,9 @@ body {
     justify-items: center;
 }
 
-.create-project-label {}
+.create-project-label {
+
+}
 
 .create-project-input {
     width: 100%;
@@ -348,4 +353,127 @@ body {
     align-self: end;
     height: 100%;
     width: 100%;
+}
+
+.todo-list {
+    display: grid;
+    justify-items: center;
+    row-gap: 0.5rem;
+    width: 100%;
+}
+
+.todo {
+    border: 1px solid black;
+    /* create grid like before */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    padding: 0.5rem;
+    width: 90%;
+
+}
+
+.todo-title {
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid black;
+}
+
+.todo-title-text {
+    font-size: 0.9rem;
+    background-color: var(--background-color-todo-text);
+
+}
+
+.todo-title-input {
+    font-size: 1.2rem;
+}
+
+.todo-description {
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid black; 
+}
+
+.todo-description-text {
+    font-size: 0.9rem;
+    background-color: var(--background-color-todo-text);
+}
+
+.todo-description-input {
+    font-size: 1.2rem;
+    
+}
+
+.todo-dueDate {
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid black;
+}
+
+.todo-dueDate-text {
+    font-size: 0.9rem;
+    background-color: var(--background-color-todo-text);
+}
+
+.todo-dueDate-input {
+    font-size: 1.2rem;
+}
+
+.todo-priority {
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid black;
+}
+
+.todo-priority-text {
+    font-size: 0.9rem;
+    background-color: var(--background-color-todo-text);
+}
+
+.todo-priority-input {
+    font-size: 1.2rem;
+}
+
+.todo-checkbox {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-items: end;
+    grid-template-columns: 1fr 1fr;
+}
+
+.todo-checkbox-start {
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+
+}
+
+.todo-checkbox-start-text {
+    font-size: 0.9rem;  
+}
+
+.todo-checkbox-start-input {
+    height: 90%;
+}
+
+.todo-checkbox-end {
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    justify-items: center;
+}
+
+.todo-checkbox-end-text {
+    font-size: 0.9rem;
+}
+
+.todo-checkbox-end-button {
+    width: 80%;
+    height: 90%;
+    border: none;
+    background-color: rgb(184, 183, 183);
+    border-radius: 4px;
+}
+
+.todo-checkbox-end-button:hover {
+    background-color: rgb(199, 36, 36);
 }
