@@ -1,5 +1,5 @@
 import { data } from "./index.js";
-import { lastActiveButton } from "./create-project.js";
+import { lastActiveButton } from "./project.js";
 import { checkForToDoList } from "./render.js";
 
 export function getInputNewToDo() {
@@ -45,10 +45,8 @@ export function getLastButtonPressed(btn) {
     }
     // if called with eventlistener get btn.target.id
     else {
-        console.log("else no string");
         lastActiveButton.active = btn.target.id;
     }
     
     console.log(`last active button: ${lastActiveButton.active}`);
-    console.log(btn);
 }

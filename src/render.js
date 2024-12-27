@@ -1,6 +1,6 @@
 /* module renders windows for project and todo creation */
-import { createProject, lastActiveButton } from "./create-project.js";
-import { getInputNewToDo, getLastButtonPressed } from "./create-todo.js";
+import { createProject, deleteProject, lastActiveButton } from "./project.js";
+import { getInputNewToDo, getLastButtonPressed } from "./todo.js";
 import { data } from "./index.js";
 
 // sets button state, if  a window is open buttons in the background are deactivated
@@ -8,7 +8,6 @@ const OPEN_WINDOW = "openWindow";
 const CLOSE_WINDOW = "closeWindow";
 
 
-/* WINDOW CREATE PROJECTS */
 // function creates (opens) new window so user can create new projects
 export function openWindowProject() {
     // set button state
@@ -65,7 +64,7 @@ export function openWindowProject() {
     form.append(inputSubmit);
 
     form.addEventListener("submit", (event) => {
-        validateInputWindowProject(event);
+        validateWindowProject(event);
     })
 
     divCreateProject.append(header);
@@ -76,22 +75,75 @@ export function openWindowProject() {
     container.append(divCreateProject);
 }
 
-// function removes window for creating a new project
-function closeWindowProject() {
+// change window into delete project
+export function openWindowDeleteProject() {
+    console.log("function openWindowDeleteProject");
+
     // set button state
-    setButtonState(CLOSE_WINDOW);
+    setButtonState(OPEN_WINDOW);
+    // get main container
     const container = document.querySelector("#container");
-    const window = document.querySelector("#create-project");
-    container.removeChild(window);
+
+    // create small window for new project creation
+    const divCreateProject = document.createElement("div");
+    divCreateProject.className = "create-project";
+    divCreateProject.id = "create-project"
+
+    // create info text for window
+    const header = document.createElement("h2");
+    header.className = "create-project-header";
+    header.innerHTML = "Delete Project";
+
+    // create button to close window
+    const buttonClose = document.createElement("button");
+    buttonClose.className = "button-close";
+    buttonClose.innerHTML = "X";
+    buttonClose.addEventListener("click", () => {
+        closeWindowProject();
+    });
+
+    // create label and input field so user can enter name of new project
+    const form = document.createElement("form");
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    const inputSubmit = document.createElement("input");
+
+    form.className = "create-project-form";
+    label.className = "create-project-label";
+    input.className = "create-project-input";
+    inputSubmit.className = "input-submit"
+
+    input.id = "create-project-input"
+    input.maxLength = 15;
+    input.placeholder = "Enter name and press confirm";
+    input.required = true;
+
+
+    // connect label with input field using for attribute
+    label.htmlFor = input.id;
+
+    input.setAttribute("type", "text");
+    label.innerHTML = "Project Name";
+
+    inputSubmit.setAttribute("type", "submit");
+    inputSubmit.setAttribute("value", "Submit");
+
+    form.append(label);
+    form.append(input);
+    form.append(inputSubmit);
+
+    form.addEventListener("submit", (event) => {
+        validateWindowDeleteProject(event);
+    })
+
+    divCreateProject.append(header);
+    divCreateProject.append(buttonClose);
+    divCreateProject.append(form);
+
+    // append window created to main container
+    container.append(divCreateProject);
 }
 
-function validateInputWindowProject(e) {
-    e.preventDefault();
-    createProject();
-    closeWindowProject();
-}
-
-/* WINDOW CREATE TO-DO's */
 // function create (opens) new window so user can create a new todo for the selected project
 export function openWindowToDo() {
     // set button states
@@ -199,7 +251,6 @@ export function openWindowToDo() {
     labelDueDate.htmlFor = inputDueDate.id;
     labelPriority.htmlFor = selectPriority.id;
 
-
     // define type of input fields
     inputTitle.setAttribute("type", "text");
     inputDescription.setAttribute("type", "text");
@@ -210,7 +261,6 @@ export function openWindowToDo() {
     optionHigh.setAttribute("value", "high");
     inputSubmit.setAttribute("type", "submit");
     inputSubmit.setAttribute("value", "Submit");
-
 
     // append labels and input to their container
     divTitle.append(labelTitle);
@@ -242,15 +292,13 @@ export function openWindowToDo() {
     selectPriority.value = "normal";
 }
 
-function validateInputToDoWindow(e) {
-    e.preventDefault();
-
-    // get data
-    getInputNewToDo();
-
-    // create object
-
-    closeWindowToDo();
+// function removes window for creating/deleting a project
+function closeWindowProject() {
+    // set button state
+    setButtonState(CLOSE_WINDOW);
+    const container = document.querySelector("#container");
+    const window = document.querySelector("#create-project");
+    container.removeChild(window);
 }
 
 /* removes window for todo's from DOM and changes button states */
@@ -269,6 +317,33 @@ function closeWindowToDo() {
     buttonAddToDo.disabled = false;
 }
 
+function validateWindowProject(e) {
+    e.preventDefault();
+    createProject();
+    closeWindowProject();
+    removeAllToDo();
+}
+
+function validateWindowDeleteProject(e) {
+    console.log("function validateWindowDeleteProject");
+    e.preventDefault();
+    const userInput = e.currentTarget["create-project-input"].value;
+    deleteProject(userInput);
+
+    closeWindowProject();
+}
+
+
+function validateInputToDoWindow(e) {
+    e.preventDefault();
+
+    // get data
+    getInputNewToDo();
+
+    // create object
+
+    closeWindowToDo();
+}
 
 /* later I have to disabled project buttons to */
 function setButtonState(window) {
@@ -311,7 +386,6 @@ export function checkForToDoList(btn) {
     console.log("function checkForToDoList");
     getLastButtonPressed(btn);
     removeAllToDo();
-    console.log("here-------");
     for (let i = 0; i < data.length; i++) {
         // if this project has todos, call function to render
         if (data[i]["buttonId"] == lastActiveButton.active) {
@@ -325,7 +399,6 @@ export function checkForToDoList(btn) {
 // function will render todos found
 function renderToDoList(obj) {
     console.log("function renderToDoList");
-    console.log(obj["buttonId"]);
     const title = obj["title"];
     const description = obj["description"];
     const dueDate = obj["dueDate"];
@@ -384,7 +457,7 @@ function renderToDoList(obj) {
     const divContainerDueDate = document.createElement("div");
     const divDueDateText = document.createElement("div");
     const divDueDateInput = document.createElement("div");
-    
+
     // add classes
     divContainerDueDate.className = "todo-dueDate";
     divDueDateText.className = "todo-dueDate-text";
@@ -394,12 +467,12 @@ function renderToDoList(obj) {
     divDueDateText.id = "todo-dueDate-text";
     divDueDateInput.id = "todo-dueDate-input";
     // add innerHTML
-    divDueDateText.innerHTML  = "Due Date";
+    divDueDateText.innerHTML = "Due Date";
     divDueDateInput.innerHTML = dueDate;
     // append children to parent
     divContainerDueDate.append(divDueDateText);
     divContainerDueDate.append(divDueDateInput);
-    
+
 
     // create todo-priority
     const divContainerPriority = document.createElement("div");
@@ -419,7 +492,6 @@ function renderToDoList(obj) {
     // append children to parent
     divContainerPriority.append(divPriorityText);
     divContainerPriority.append(divPriorityInput);
-
 
     // create todo-checkbox
     const divContainerCheckbox = document.createElement("div");
@@ -472,41 +544,7 @@ function renderToDoList(obj) {
     // append children to parent
     divContainerCheckbox.append(divContainerCheckboxStart);
     divContainerCheckbox.append(divContainerCheckboxEnd);
-    
-    /*
-    <div class="todo" id="todo">
-        <div class="todo-title" id="todo-title">
-            <div class="todo-title-text" id="todo-title-text">Title</div>
-            <div class="todo-title-input" id="todo-title-input">workout</div>
-        </div>
-        <div class="todo-description" id="todo-description">
-            <div class="todo-description-text" id="todo-description-text">Description</div>
-            <div class="todo-description-input" id="todo-description-input">training with friend in park</div>
-        </div>
-        <div class="todo-dueDate" id="todo-dueDate">
-            <div class="todo-dueDate-text" id="todo-dueDate-text">due Date</div>
-            <div class="todo-dueDate-input" id="todo-dueDate-input">12.01.2025</div>
-        </div>
-        <div class="todo-priority" id="todo-priority">
-            <div class="todo-priority-text" id="todo-priority-text">Priority</div>
-            <div class="todo-priority-input" id="todo-priority-input">Normal</div>
-        </div>
 
-        <div class="todo-checkbox" id="todo-checkbox">
-            <div class="todo-checkbox-start" id="todo-checkbox-start">
-                <label class="todo-checkbox-start-text" id="todo-checkbox-start-text" for="todo-done">DONE</label>
-                <input class="todo-checkbox-start-input" id="todo-checkbox-start-box" type="checkbox" name="checkbox-done" value="done">
-            </div>
-
-            <div class="todo-checkbox-end" id="todo-checkbox-end">
-                <div class="todo-checkbox-end-text" id="todo-checkbox-end-text">Remove</div>
-                <button class="todo-checkbox-end-button" id="todo-checkbox-end-button">X</button>
-            </div>
-        </div>
-    </div>
-    */
-
-    
     divToDo.append(divContainerTitle);
     divToDo.append(divContainerDescription);
     divToDo.append(divContainerDueDate);
@@ -521,7 +559,7 @@ function removeAllToDo() {
     console.log("function removeAllToDo");
     const todoList = document.querySelector("#todo-list");
 
-    while(todoList.firstChild) {
+    while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
     }
 }
