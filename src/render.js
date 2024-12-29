@@ -1,6 +1,6 @@
 /* module renders windows for project and todo creation */
 import { createProject, deleteProject, lastActiveButton } from "./project.js";
-import { getInputNewToDo, getLastButtonPressed } from "./todo.js";
+import { getInputNewToDo, getLastButtonPressed, setColorInputPriority, deleteToDo } from "./todo.js";
 import { data } from "./index.js";
 
 // sets button state, if  a window is open buttons in the background are deactivated
@@ -48,7 +48,6 @@ export function openWindowProject() {
     input.maxLength = 15;
     input.placeholder = "Enter name and press confirm";
     input.required = true;
-
 
     // connect label with input field using for attribute
     label.htmlFor = input.id;
@@ -172,6 +171,7 @@ export function openWindowToDo() {
     // create form for label and input
     const form = document.createElement("form");
     form.className = "create-todo-form";
+    form.id = "create-todo-form";
 
     form.addEventListener("submit", (event) => {
         validateInputToDoWindow(event);
@@ -191,7 +191,7 @@ export function openWindowToDo() {
 
     // create inputs
     const inputTitle = document.createElement("input");
-    const inputDescription = document.createElement("input");
+    const inputDescription = document.createElement("textarea");
     const inputDueDate = document.createElement("input");
     // create select element with options as input
     const selectPriority = document.createElement("select");
@@ -200,36 +200,37 @@ export function openWindowToDo() {
     const optionHigh = document.createElement("option");
     const inputSubmit = document.createElement("input");
 
-    // set input required
-    inputTitle.required = true;
-    inputDescription.required = true;
-    inputDueDate.required = true;
-
     // add class to container for labels and input
-    divTitle.classList = "create-todo-divContainer";
-    divDescription.classList = "create-todo-divContainer";
-    divDueDate.classList = "create-todo-divContainer";
-    divPriority.classList = "create-todo-divContainer";
+    divTitle.className = "create-todo-divContainer-title";
+    divDescription.className = "create-todo-divContainer-description";
+    divDueDate.className = "create-todo-divContainer-dueDate";
+    divPriority.className = "create-todo-divContainer-priority";
 
     // add class to labels
-    labelTitle.classList = "create-todo-label";
-    labelDescription.classList = "create-todo-label";
-    labelDueDate.classList = "create-todo-label";
-    labelPriority.classList = "create-todo-label";
+    labelTitle.className = "create-todo-label";
+    labelDescription.className = "create-todo-label";
+    labelDueDate.className = "create-todo-label create-todo-label-dueDate";
+    labelPriority.className = "create-todo-label create-todo-label-priority";
     // add class to inputs
-    inputTitle.classList = "create-todo-input";
-    inputDescription.classList = "create-todo-input";
-    inputDueDate.classList = "create-todo-input create-todo-inputDueDate";
-    selectPriority.classList = "create-todo-selectPriority";
-    optionLow.classList = "create-todo-optionLow";
-    optionNormal.classList = "create-todo-optionNormal";
-    optionHigh.classList = "create-todo-optionHigh";
-    inputSubmit.classList = "input-submit input-submit-todo";
-
-    // add placeholder text to input
-    inputTitle.placeholder = "Enter your Title..."
-    inputDescription.placeholder = "Enter your Description..."
-
+    inputTitle.className = "create-todo-input-title";
+    inputDescription.className = "create-todo-input-description";
+    inputDueDate.className = "create-todo-input-dueDate";
+    selectPriority.className = "create-todo-selectPriority";
+    optionLow.className = "create-todo-optionLow";
+    optionNormal.className = "create-todo-optionNormal";
+    optionHigh.className = "create-todo-optionHigh";
+    inputSubmit.className = "input-submit input-submit-todo";
+    // add id to inputs
+    inputTitle.id = "create-todo-input-title";
+    inputDescription.id = "create-todo-input-description";
+    inputDueDate.id = "create-todo-input-dueDate";
+    selectPriority.id = "create-todo-selectPriority";
+    inputSubmit.id = "input-submit-todo";
+    // connect labels with inputs
+    labelTitle.htmlFor = inputTitle.id;
+    labelDescription.htmlFor = inputDescription.id;
+    labelDueDate.htmlFor = inputDueDate.id;
+    labelPriority.htmlFor = selectPriority.id;
     // add text to labels
     labelTitle.innerHTML = "Title";
     labelDescription.innerHTML = "Description";
@@ -239,21 +240,23 @@ export function openWindowToDo() {
     optionNormal.innerHTML = "NORMAL";
     optionHigh.innerHTML = "HIGH";
 
-    // add id to inputs
-    inputTitle.id = "create-todo-input-title";
-    inputDescription.id = "create-todo-input-description";
-    inputDueDate.id = "create-todo-input-dueDate";
-    selectPriority.id = "create-todo-selectPriority";
+    // add placeholder text to input
+    inputTitle.placeholder = "Enter your Title..."
+    inputDescription.placeholder = "Enter your Description..."
 
-    // connect labels with inputs
-    labelTitle.htmlFor = inputTitle.id;
-    labelDescription.htmlFor = inputDescription.id;
-    labelDueDate.htmlFor = inputDueDate.id;
-    labelPriority.htmlFor = selectPriority.id;
+    // set input required
+    inputTitle.required = true;
+    inputDescription.required = true;
+    inputDueDate.required = true;
+
+    // limit input length
+    inputTitle.setAttribute("maxLength", 20);
+    inputDescription.setAttribute("maxLength", 100);
 
     // define type of input fields
     inputTitle.setAttribute("type", "text");
     inputDescription.setAttribute("type", "text");
+    inputDescription.setAttribute("rows", 3);
     inputDueDate.setAttribute("type", "date");
     selectPriority.setAttribute("name", "create-todo-selectPriority");
     optionLow.setAttribute("value", "low");
@@ -541,6 +544,11 @@ function renderToDoList(obj) {
     divContainerCheckboxEnd.append(labelCheckBoxEndText);
     divContainerCheckboxEnd.append(buttonCheckBoxEnd);
 
+    // add eventlistener to button so todo can be deleted
+    buttonCheckBoxEnd.addEventListener("click", (btn) => {
+        deleteToDo(btn);
+    })
+
     // append children to parent
     divContainerCheckbox.append(divContainerCheckboxStart);
     divContainerCheckbox.append(divContainerCheckboxEnd);
@@ -552,6 +560,9 @@ function renderToDoList(obj) {
     divToDo.append(divContainerCheckbox);
 
     mainContainer.append(divToDo);
+
+    // change color of text priority
+    setColorInputPriority(divPriorityInput, priority);
 }
 
 // function will remove all todos from todo-list before rendering

@@ -115,6 +115,7 @@ export function deleteProject(userInput) {
     }
     else {
         alert("default Project can't be deleted");
+        
     }
     // jump on project above and render this todo instead, if no other project available, render default 
     // change last button pressed

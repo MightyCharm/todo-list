@@ -50,3 +50,28 @@ export function getLastButtonPressed(btn) {
     
     console.log(`last active button: ${lastActiveButton.active}`);
 }
+
+// different priorities get different colors
+export function setColorInputPriority(divPriorityInput, priority) {
+    console.log("function getColorInputPriority");
+    switch (priority) {
+        case "low":
+            divPriorityInput.style.backgroundColor = "blue"           
+            break;
+        case "normal":
+            divPriorityInput.style.backgroundColor = "green"
+            break;
+        case "high":
+            divPriorityInput.style.backgroundColor = "red";
+            break;
+    }
+    divPriorityInput.style.color = "white"   
+
+}
+
+export function deleteToDo(btn) {
+    console.log("function deleteToDo");
+    console.log(btn);
+    console.log(data);
+    
+}
