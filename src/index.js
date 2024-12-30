@@ -4,7 +4,7 @@ import { openWindowProject, openWindowDeleteProject, openWindowToDo } from "./re
 
 // this variable will save all different projects and their todos
 // used in:
-// create-project.js: creating key: value pair ("button.innerHTML": [])
+// project.js: creating key: value pair ("button.innerHTML": [])
 // render.js: access key to load values
 export const data = [];
 

@@ -24,7 +24,7 @@ export function createProject() {
     // get container to append created element
     const container = document.querySelector("#project-display-buttons");
     // get input element to get the value entered into it
-    const input = document.querySelector("#create-project-input");
+    const input = document.querySelector("#project-input");
 
     // create new div project
     const buttonProject = document.createElement("button");
@@ -117,10 +117,4 @@ export function deleteProject(userInput) {
         alert("default Project can't be deleted");
         
     }
-    // jump on project above and render this todo instead, if no other project available, render default 
-    // change last button pressed
-
-
 }
-
-

@@ -13,16 +13,16 @@ export function openWindowProject() {
     // set button state
     setButtonState(OPEN_WINDOW);
     // get main container
-    const container = document.querySelector("#container");
+    const container = document.querySelector("#project-display");
 
     // create small window for new project creation
     const divCreateProject = document.createElement("div");
-    divCreateProject.className = "create-project";
-    divCreateProject.id = "create-project"
+    divCreateProject.className = "project";
+    divCreateProject.id = "project"
 
     // create info text for window
     const header = document.createElement("h2");
-    header.className = "create-project-header";
+    header.className = "project-header";
     header.innerHTML = "Create a new Project";
 
     // create button to close window
@@ -39,12 +39,12 @@ export function openWindowProject() {
     const input = document.createElement("input");
     const inputSubmit = document.createElement("input");
 
-    form.className = "create-project-form";
-    label.className = "create-project-label";
-    input.className = "create-project-input";
+    form.className = "project-form";
+    label.className = "project-label";
+    input.className = "project-input";
     inputSubmit.className = "input-submit"
 
-    input.id = "create-project-input"
+    input.id = "project-input"
     input.maxLength = 15;
     input.placeholder = "Enter name and press confirm";
     input.required = true;
@@ -81,16 +81,16 @@ export function openWindowDeleteProject() {
     // set button state
     setButtonState(OPEN_WINDOW);
     // get main container
-    const container = document.querySelector("#container");
+    const container = document.querySelector("#project-display");
 
     // create small window for new project creation
     const divCreateProject = document.createElement("div");
-    divCreateProject.className = "create-project";
-    divCreateProject.id = "create-project"
+    divCreateProject.className = "project";
+    divCreateProject.id = "project"
 
     // create info text for window
     const header = document.createElement("h2");
-    header.className = "create-project-header";
+    header.className = "project-header";
     header.innerHTML = "Delete Project";
 
     // create button to close window
@@ -107,12 +107,12 @@ export function openWindowDeleteProject() {
     const input = document.createElement("input");
     const inputSubmit = document.createElement("input");
 
-    form.className = "create-project-form";
-    label.className = "create-project-label";
-    input.className = "create-project-input";
+    form.className = "project-form";
+    label.className = "project-label";
+    input.className = "project-input";
     inputSubmit.className = "input-submit"
 
-    input.id = "create-project-input"
+    input.id = "project-input"
     input.maxLength = 15;
     input.placeholder = "Enter name and press confirm";
     input.required = true;
@@ -135,12 +135,14 @@ export function openWindowDeleteProject() {
         validateWindowDeleteProject(event);
     })
 
+    // get projects names with funtion so number of rows will be calculated
     divCreateProject.append(header);
     divCreateProject.append(buttonClose);
     divCreateProject.append(form);
-
+    
     // append window created to main container
     container.append(divCreateProject);
+    
 }
 
 // function create (opens) new window so user can create a new todo for the selected project
@@ -299,8 +301,8 @@ export function openWindowToDo() {
 function closeWindowProject() {
     // set button state
     setButtonState(CLOSE_WINDOW);
-    const container = document.querySelector("#container");
-    const window = document.querySelector("#create-project");
+    const container = document.querySelector("#project-display");
+    const window = document.querySelector("#project");
     container.removeChild(window);
 }
 
@@ -330,7 +332,7 @@ function validateWindowProject(e) {
 function validateWindowDeleteProject(e) {
     console.log("function validateWindowDeleteProject");
     e.preventDefault();
-    const userInput = e.currentTarget["create-project-input"].value;
+    const userInput = e.currentTarget["project-input"].value;
     deleteProject(userInput);
 
     closeWindowProject();
@@ -353,7 +355,8 @@ function setButtonState(window) {
     const buttonCreate = document.querySelector("#button-create");
     const buttonDelete = document.querySelector("#button-delete");
     const buttonAddToDo = document.querySelector("#button-add");
-    const buttonProjects = document.querySelectorAll("#button-new-project");
+    const buttonProjects = document.querySelectorAll(".button-new-project");
+    const buttonToDo = document.querySelectorAll("#todo-checkbox-end-button");
 
     // console.log(window);
     switch (window) {
@@ -365,6 +368,9 @@ function setButtonState(window) {
             buttonProjects.forEach((button) => {
                 button.disabled = true;
             })
+            buttonToDo.forEach((button) => {
+                button.disabled = true;
+            })
             break;
         case "closeWindow":
             // enable buttons
@@ -373,6 +379,9 @@ function setButtonState(window) {
             buttonAddToDo.disabled = false;
             buttonProjects.forEach((button) => {
                 //console.log(button);
+                button.disabled = false;
+            })
+            buttonToDo.forEach((button) => {
                 button.disabled = false;
             })
             break;
@@ -402,6 +411,7 @@ export function checkForToDoList(btn) {
 // function will render todos found
 function renderToDoList(obj) {
     console.log("function renderToDoList");
+    const todoId = obj["todoId"];
     const title = obj["title"];
     const description = obj["description"];
     const dueDate = obj["dueDate"];
@@ -412,7 +422,7 @@ function renderToDoList(obj) {
     // create container for single todo
     const divToDo = document.createElement("div");
     divToDo.className = "todo";
-    divToDo.id = "todo";
+    divToDo.id = todoId;
 
     // create todo-title
     const divContainerTitle = document.createElement("div");
@@ -536,7 +546,8 @@ function renderToDoList(obj) {
     // add id
     divContainerCheckboxEnd.id = "todo-checkbox-end";
     labelCheckBoxEndText.id = "todo-checkbox-end-text";
-    buttonCheckBoxEnd.id = "todo-checkbox-end-button";
+    // buttonCheckBoxEnd.id = "todo-checkbox-end-button";
+    buttonCheckBoxEnd.id = todoId;
     // add innerHTML
     labelCheckBoxEndText.innerHTML = "REMOVE";
     buttonCheckBoxEnd.innerHTML = "X";
@@ -563,6 +574,7 @@ function renderToDoList(obj) {
 
     // change color of text priority
     setColorInputPriority(divPriorityInput, priority);
+
 }
 
 // function will remove all todos from todo-list before rendering
