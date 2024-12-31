@@ -328,6 +328,7 @@ body {
     /* border: 1px solid red; */
     height: 50%;
     font-size: 1.2rem;
+    font-weight: bold;
 }
 
 
@@ -525,7 +526,7 @@ body {
     padding-left: 0.2rem;
 }
 
-.todo-checkbox {
+.todo-checkbox-button {
     width: 100%;
     height: 100%;
     display: grid;
@@ -533,34 +534,34 @@ body {
     grid-template-columns: 1fr 1fr;
     column-gap: 0.8rem;
     margin-left: 0.1rem;
+
 }
 
-.todo-checkbox-start {
+.todo-checkbox-div {
     display: grid;
-    grid-template-rows: 1fr 2fr;
-  
-
+    grid-template-rows: 1fr 2fr;   
 }
 
-.todo-checkbox-start-text {
+.todo-checkbox-text {
     font-size: 0.9rem;  
 }
 
-.todo-checkbox-start-input {
+.todo-checkbox {
     height: 80%;
 }
 
-.todo-checkbox-end {
+.todo-button-div {
     display: grid;
     grid-template-rows: 1fr 2fr;
     justify-items: center;
 }
 
-.todo-checkbox-end-text {
+.todo-button-text {
     font-size: 0.9rem;
+    height: 100%;
 }
 
-.todo-checkbox-end-button {
+.todo-button {
     width: 80%;
     height: 80%;
     border: none;
@@ -568,12 +569,12 @@ body {
     border-radius: 4px;
 }
 
-.todo-checkbox-end-button:disabled {
-    background-color: var(--button-background-disabled);
+.todo-button:hover {
+    background-color: rgb(199, 36, 36);
     color: white;
 }
 
-.todo-checkbox-end-button:hover {
-    background-color: rgb(199, 36, 36);
+.todo-button:disabled {
+    background-color: var(--button-background-disabled);
     color: white;
 }

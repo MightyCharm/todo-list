@@ -2,7 +2,7 @@ import { checkForToDoList } from "./render.js"; // used to add eventlistener
 import { data } from "./index.js";
 
 /* will be used to create id for buttonProject */
-let buttonCount = 1
+let buttonCount = 0
 
 export let lastActiveButton = { active: 'button-new-project-0' };
 
@@ -28,7 +28,7 @@ export function createProject() {
 
     // create new div project
     const buttonProject = document.createElement("button");
-    buttonProject.id = `button-new-project-${buttonCount}`;
+    buttonProject.id = `button-new-project-${getButtonCount()}`;
     buttonProject.className = "button-new-project";
     buttonProject.innerHTML = input.value;
 
@@ -36,7 +36,8 @@ export function createProject() {
         checkForToDoList(btn);
     })
     container.append(buttonProject);
-    buttonCount += 1;
+    // buttonCount += 1;
+    // getButtonCount();
 
     lastActiveButton = { active: buttonProject.id };
 }
@@ -117,4 +118,9 @@ export function deleteProject(userInput) {
         alert("default Project can't be deleted");
         
     }
+}
+
+function getButtonCount() {
+    buttonCount++;
+    return buttonCount;
 }
