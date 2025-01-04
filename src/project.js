@@ -1,4 +1,4 @@
-import { checkForToDoList } from "./render.js"; // used to add eventlistener
+import { checkForToDoList, openWindowDeleteProject } from "./render.js"; // used to add eventlistener
 import { data } from "./index.js";
 
 /* will be used to create id for buttonProject */
@@ -10,7 +10,7 @@ export let lastActiveButton = { active: 'button-new-project-0' };
 // append eventlistener to button project default
 export function createDefaultProject() {
     console.log("function createDefaultProject");
-    const buttonDefault = document.querySelector("#button-new-project-0");
+    const buttonDefault = document.querySelector("#btn-newProject-0");
     buttonDefault.innerHTML = "default";
 
     buttonDefault.addEventListener("click", (btn) => {
@@ -28,14 +28,24 @@ export function createProject() {
 
     // create new div project
     const buttonProject = document.createElement("button");
-    buttonProject.id = `button-new-project-${getButtonCount()}`;
-    buttonProject.className = "button-new-project";
+    buttonProject.id = `btn-newProject-${getButtonCount()}`;
+    buttonProject.className = "btn-newProject";
     buttonProject.innerHTML = input.value;
+
+    const btnDeleteProject = document.createElement("button");
+    btnDeleteProject.id = `btn-deleteProject`;
+    btnDeleteProject.className = "btn-deleteProject";
+    btnDeleteProject.innerHTML = "DELETE";
 
     buttonProject.addEventListener("click", (btn) => {
         checkForToDoList(btn);
     })
+
+    btnDeleteProject.addEventListener("click", () => {
+        openWindowDeleteProject();
+    })
     container.append(buttonProject);
+    container.append(btnDeleteProject);
     // buttonCount += 1;
     // getButtonCount();
 
@@ -71,7 +81,7 @@ export function deleteProject(userInput) {
             }
         }
 
-        console.log(data.length);
+        console.log(`targetButtonId: ${targetButtonId}`);
         // check if user input was correct and project was found in loop
         if (projectFound === true) {
             // remove button from DOM
@@ -105,12 +115,10 @@ export function deleteProject(userInput) {
                     i = -1;
                 }
             }
-
             // rerender list above...if nothing there default
             // change last button pressed to one above
-            const buttonDefault = document.querySelector("#button-new-project-0");
+            const buttonDefault = document.querySelector("#btn-newProject-0");
             checkForToDoList(buttonDefault.id);
-
 
         }
     }
@@ -118,6 +126,7 @@ export function deleteProject(userInput) {
         alert("default Project can't be deleted");
         
     }
+
 }
 
 function getButtonCount() {

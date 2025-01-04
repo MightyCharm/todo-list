@@ -28,192 +28,171 @@ body {
     width: 100vw;
 
     display: grid;
-    grid-template-rows: 1fr 12fr;
+    grid-template-rows: 1fr 2fr 12fr;
     grid-template-columns: 1fr 3fr;
-    color: black;
+    
+    background-color:#000;
+    color: #fff;
 }
 
-/* top container */
+/* top container (1row) */
 .header-section {
     display: grid;
     align-items: center;
-    padding-left: 1rem;
-
-    /* border: 1px solid red; */
-    border-bottom: 1px solid #000;
     grid-column: 1 / 3;
 
     font-size: 2rem;
+    background-color: rgb(19, 19, 19);
+    padding-left: 1rem;
 }
 
-/* left side container */
+/* left side container (2row) */
+.create-project-section {
+    grid-row: 2;
+    grid-column: 1 / 2;
+    align-self: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+
+    background-color: rgb(19, 19, 19);
+    height: 100%;
+    padding-left: 1rem;
+}
+
+.create-project-text {
+    text-align: center;
+    font-size: 1.5rem;
+    justify-self: start;
+}
+
+.btn-addProject {
+    justify-self: start;
+    width: 70px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--button-background);
+    color: var(--button-color);
+}
+
+.btn-addProject:hover {
+    background-color: var(--button-background-hover);
+}
+
+.btn-addProject:disabled {
+    background-color: var(--button-background-disabled);
+}
+
+/* create todo section (2row)*/
+.create-todo-section {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    justify-items: center;
+    align-items: center;
+    /* row-gap: 1rem; */
+
+    background-color: rgb(19, 19, 19);
+}
+
+.create-todo-text {
+    font-size: 1.5rem;
+}
+
+.btn-addToDo {
+    justify-self: start;
+    width: 70px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--button-background);
+    color: var(--button-color);
+}
+
+.btn-addToDo:hover {
+    background-color: var(--button-background-hover);
+}
+
+.btn-addToDo:disabled {
+    background-color: var(--button-background-disabled);
+}
+
+/* text and buttons for projects (3row) */
 .project-section {
+    grid-row: 3;
+    grid-column: 1 / 2;
     display: grid;
     grid-template-rows: 1fr 3fr;
     justify-items: center;
     align-items: center;
-
-    /* background: blue; */
-    border-right: 1px solid #000;
-
+    /* border-right: 1px solid #fff; */
     min-width: 400px;
+    background-color: rgb(19, 19, 19);
 }
 
-/* top left side */
-.project-option {
 
+.project-display-info {
+    align-self: center;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center;
-    align-items: center;
-
-    border: 1px solid #000;
-    border-radius: var(--border-radius);
-    width: 90%;
-    height: 50%;
+    grid-template-columns: 1fr 3fr;
+    grid-column: 1/ 3;
+    width: 100%;
+    padding-left: 1rem;
 }
 
-.text-option {
-    text-align: center;
+.project-text{
+    justify-self: start;
+    font-size: 1.5rem;
 }
 
-.button-option {
-    width: 80%;
-    height: 40%;
-    border: none;
-    background-color: var(--button-background);
-    color: var(--button-color);
-}
-
-.button-option:hover {
-    background-color: var(--button-background-hover);
-}
-
-.button-option:disabled {
-    background-color: var(--button-background-disabled);
-}
-
-/* mid left side */
-.project-display {
-    align-self: start;
-
-    display: grid;
-    grid-template-rows: 0.1fr 2fr;
-    grid-auto-rows: 40px;
-    justify-items: center;
-
-    border: 1px solid #000;
-    border-radius: var(--border-radius);
-    width: 90%;
-    height: 100%;
-    font-size: 1.2rem;
-    padding-bottom: 1rem;
-}
-
-.project-display-header {
-    padding: 1rem;
-}
-
-.text-display {
-
+.project-name { 
+    font-size: 1.5rem;
 }
 
 .project-display-buttons {
-    width: 100%;
+    align-self: start;
+    grid-column: 1/ 3;
     display: grid;
+    grid-auto-rows: 30px;
     justify-items: center;
     row-gap: 1rem;
-
-    grid-template-rows: repeat(auto-fill, 40px);
-}
-
-.button-project {
-    width: 50%;
-    min-height: 30px;
-    border: none;
-    background-color: var(--button-background);
-    color: var(--button-color);
-}
-
-.button-project:hover {
-    background-color: var(--button-background-hover);
-}
-
-/* right side container */
-.todo-section {
-    display: grid;
-    justify-items: center;
-    align-items: start;
-    padding-top: 1rem;
-    grid-template-rows: 1fr 10fr;  
-    row-gap: 1rem;
-}
-
-/* contains text and button */
-.todo-create {
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-    align-items: center;
-
-    border-bottom: 1px solid #000;
+    grid-template-columns: 2fr 1fr;
     width: 100%;
-    height: 100%;
 }
 
-.todo-text {
-    font-size: 1.5rem;
-    justify-self: center;
-}
-
-.button-add {
+.btn-newProject {
+    background-color: var(--button-2-background);
     border: none;
-    background-color: var(--button-background);
-    color: var(--button-color);
-    font-size: 1.5rem;
-    max-width: 100px;
-    min-width: 150px;
-}
-
-.button-add:hover {
-    background-color: var(--button-background-hover);
-}
-
-.button-add:disabled {
-    background-color: var(--button-background-disabled);
-}
-
-.todo-card {
-    grid-column: 1 / 3;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    justify-items: center;
-    align-items: center;
-
-    border: 1px solid black;
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    height: 10%;
     width: 90%;
+    
 }
 
-.todo-card-label-checkbox {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.btn-newProject:hover {
+    background-color: var(--button-2-background-hover);
+    color: #000;
 }
 
-.checkbox-done {
+.btn-newProject:disabled {
+    background-color: var(--button-background-disabled);
+    color: white;
 }
 
-.btn-delete {
-    background-color: rgb(250, 2, 2);
-    color: #fff;
+.btn-deleteProject {
+    width: 100%;
+    min-width: 100px;
+    height: 100%;
     border: none;
-    min-width: 20px;
-    min-height: 20px;
+    background-color: var(--button-background);
+    color: var(--button-color);
 }
 
-.btn-delete:hover {
-    background-color: rgb(178, 23, 23);
+.btn-deleteProject:hover {
+    background-color: var(--button-background-hover);
+}
+
+.btn-deleteProject:disabled {
+    background-color: var(--button-background-disabled);
 }
 
 /* created with JavaScript */
@@ -221,20 +200,22 @@ body {
 .project {
     position: absolute;
     height: 15%;
-    background-color: #fff;
+    background-color: #2c2c2c;
     border: 1px solid #000;
     border-radius: var(--border-radius);
+    padding: var(--padding-window);
+    font-size: 1.2rem;
 
     display: grid;
     grid-template-rows: 1fr 10fr;
     grid-template-columns: 3fr 1fr;
-
-    left: 30%;
-
     justify-items: start;
     align-items: center;
-    padding: var(--padding-window);
-    font-size: 1.2rem;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
 }
 
 .project-header {
@@ -288,23 +269,6 @@ body {
     background-color: var(--button-background-hover);
 }
 
-.button-new-project {
-    background-color: var(--button-2-background);
-    border: none;
-    width: 60%;
-   
-}
-
-.button-new-project:hover {
-    background-color: var(--button-2-background-hover);
-    color: #000;
-}
-
-.button-new-project:disabled {
-    background-color: var(--button-background-disabled);
-    color: white;
-}
-
 /* window for creating new todos */
 .create-todo {
     display: grid;
@@ -315,12 +279,14 @@ body {
     position: absolute;
     background-color: #fff;
     border: 1px solid #000;
-    top: 30%;
-    left: 1%;
     width: 37%;
     
     border-radius: var(--border-radius);
     padding: var(--padding-window);
+    background-color: #2c2c2c;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     
 }
 
@@ -432,15 +398,23 @@ body {
     width: 100%;
 }
 
-.todo-list {
+.todo-list-section {
+    grid-row: 3;
+    grid-column: 2 / 3;
     display: grid;
     justify-items: center;
-    row-gap: 0.5rem;
+    /* row-gap: 0.5rem; */
     width: 100%;
+    background-color: rgb(38, 38, 38);
+    grid-auto-rows: 120px;
+    padding-top: 1rem;
 }
 
+/* todo element */
 .todo {
-    border: 1px solid black;
+    align-self: start;
+    /* border: 1px solid black; */
+    background-color: #515050;
     /* create grid like before */
     display: grid;
     grid-template-columns: 180px 400px 1fr 1fr 1.1fr;
@@ -449,6 +423,7 @@ body {
     height: 100px;
 
     min-width: 900px;
+    border-radius: var(--border-radius)
 
 }
 

@@ -13,7 +13,7 @@ export function openWindowProject() {
     // set button state
     setButtonState(OPEN_WINDOW);
     // get main container
-    const container = document.querySelector("#project-display");
+    const container = document.querySelector("#container");
 
     // create small window for new project creation
     const createProject = document.createElement("div");
@@ -81,7 +81,7 @@ export function openWindowDeleteProject() {
     // set button state
     setButtonState(OPEN_WINDOW);
     // get main container
-    const container = document.querySelector("#project-display");
+    const container = document.querySelector("#container");
 
     // create small window for new project creation
     const deleteProject = document.createElement("div");
@@ -301,7 +301,7 @@ export function openWindowToDo() {
 function closeWindowProject() {
     // set button state
     setButtonState(CLOSE_WINDOW);
-    const container = document.querySelector("#project-display");
+    const container = document.querySelector("#container");
     const window = document.querySelector("#project");
     container.removeChild(window);
 }
@@ -314,12 +314,12 @@ function closeWindowToDo() {
     const window = document.querySelector("#create-todo");
     container.removeChild(window);
 
-    const buttonCreate = document.querySelector("#button-create");
-    const buttonDelete = document.querySelector("#button-delete");
-    const buttonAddToDo = document.querySelector("#button-add");
-    buttonCreate.disabled = false;
+    const btnAddProject = document.querySelector("#btn-addProject");
+    const buttonDelete = document.querySelector("#btn-deleteProject");
+    const btnAddToDo = document.querySelector("#btn-addToDo");
+    btnAddProject.disabled = false;
     buttonDelete.disabled = false;
-    buttonAddToDo.disabled = false;
+    btnAddToDo.disabled = false;
 }
 
 function validateWindowProject(e) {
@@ -344,10 +344,10 @@ function validateInputToDoWindow(e) {
 }
 
 function setButtonState(window) {
-    const buttonCreate = document.querySelector("#button-create");
-    const buttonDelete = document.querySelector("#button-delete");
-    const buttonAddToDo = document.querySelector("#button-add");
-    const buttonProjects = document.querySelectorAll(".button-new-project");
+    const btnAddProject = document.querySelector("#btn-addProject");
+    const btnDeleteProject = document.querySelectorAll("#btn-deleteProject");
+    const btnAddToDo = document.querySelector("#btn-addToDo");
+    const buttonProjects = document.querySelectorAll(".button-newProject");
     const buttonToDo = document.querySelectorAll(".todo-button");
     const checkboxToDo = document.querySelectorAll(".todo-checkbox");
 
@@ -355,10 +355,12 @@ function setButtonState(window) {
     switch (window) {
         case "openWindow":
             // disable buttons
-            buttonCreate.disabled = true;
-            buttonDelete.disabled = true;
-            buttonAddToDo.disabled = true;
+            btnAddProject.disabled = true;
+            btnAddToDo.disabled = true;
             buttonProjects.forEach((button) => {
+                button.disabled = true;
+            })
+            btnDeleteProject.forEach( (button) => {
                 button.disabled = true;
             })
             buttonToDo.forEach((button) => {
@@ -370,11 +372,14 @@ function setButtonState(window) {
             break;
         case "closeWindow":
             // enable buttons
-            buttonCreate.disabled = false;
-            buttonDelete.disabled = false;
-            buttonAddToDo.disabled = false;
+            btnAddProject.disabled = false;
+            btnDeleteProject.disabled = false;
+            btnAddToDo.disabled = false;
             buttonProjects.forEach((button) => {
                 //console.log(button);
+                button.disabled = false;
+            })
+            btnDeleteProject.forEach( (button) => {
                 button.disabled = false;
             })
             buttonToDo.forEach((button) => {

@@ -12,38 +12,27 @@
         <div class="header-section">
             Welcome to your personal To-Do List.
         </div>
+        <div class="create-project-section">
+            <div class="create-project-text">PROJECT</div>
+            <button id="btn-addProject" class="btn-addProject">+ ADD</button>
+        </div>
+        <div id="todo-section" class="create-todo-section">
+            <div class="create-todo-text">To-Do</div>
+            <button id="btn-addToDo" class="btn-addToDo">+ ADD</button>
+        </div>
         <div class="project-section">
-
-            <div class="project-option">
-                <p class="text-option">PROJECT OPTIONS</p>
-                <button id="button-create" class="button-option">CREATE</button>
-                <button id="button-delete" class="button-option">DELETE</button>
+            <div class="project-display-info">
+                <div class="project-text">Project:</div>
+                <div class="project-name">default</div>
             </div>
-            <div id="project-display" class="project-display">
-                <div class="project-display-header">
-                    <h2 class="text-display">Your Projects</h2>
-                </div>
-                <div id="project-display-buttons" class="project-display-buttons">
-                    <button id="button-new-project-0" class="button-new-project"></button>
-                </div>
+            <div id="project-display-buttons" class="project-display-buttons">
+                <button id="btn-newProject-0" class="btn-newProject"></button>
+                <button id="btn-deleteProject" class="btn-deleteProject">DELETE</button>
             </div>
 
         </div>
 
-
-        <div id="todo-section" class="todo-section">
-            <div class="todo-create">
-                <div class="todo-text">
-                    Project: <span id="todo-project-name">default</span>
-                </div>
-                <button id="button-add" class="button-add">ADD TO-DO</button>
-            </div>
-
-            <div class="todo-list" id="todo-list">
-
-            </div>
-
-        </div>
+        <div class="todo-list-section" id="todo-list"></div>
     </div>
 </body>
 

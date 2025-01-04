@@ -15,20 +15,20 @@ createDefaultProject();
 // console.log(`data: ${data} lastButtonPressed: ${lastButtonPressed["button"]}`);
 
 // get button create from main page
-const buttonCreate = document.querySelector("#button-create");
-const buttonDelete = document.querySelector("#button-delete");
-const buttonAddToDo = document.querySelector("#button-add");
+const btnAddProject = document.querySelector("#btn-addProject");
+const btnDeleteProject = document.querySelector("#btn-deleteProject");
+const btnAddToDo = document.querySelector("#btn-addToDo");
 // add eventlistener for button create
-buttonCreate.addEventListener("click", () => {
+btnAddProject.addEventListener("click", () => {
     openWindowProject();
 })
 
-buttonDelete.addEventListener("click", () => {
+btnDeleteProject.addEventListener("click", () => {
     openWindowDeleteProject();
 })
 
 
 
-buttonAddToDo.addEventListener("click", () => {
+btnAddToDo.addEventListener("click", () => {
     openWindowToDo();
 })
