@@ -10,12 +10,24 @@ export let lastActiveButton = { active: 'button-new-project-0' };
 // append eventlistener to button project default
 export function createDefaultProject() {
     console.log("function createDefaultProject");
-    const buttonDefault = document.querySelector("#btn-newProject-0");
-    buttonDefault.innerHTML = "default";
+    const btnDefault = document.querySelector("#btn-newProject-0");
+    const btnDeleteProject = document.querySelector("#btn-deleteProject-0")
+    btnDefault.innerHTML = "default";
 
-    buttonDefault.addEventListener("click", (btn) => {
+    btnDefault.addEventListener("click", (btn) => {
         checkForToDoList(btn);
     })
+
+    // using closure to call function with event handler,
+    // so using more than one argument is possible
+    btnDeleteProject.addEventListener("click", (btn) => {
+        handleClickEventDeleteProject(btn);
+
+    })
+
+    function handleClickEventDeleteProject(btn) {
+        openWindowDeleteProject(btn, btnDefault);
+    }
 }
 
 // function creates a new div project and appends to container
@@ -53,80 +65,43 @@ export function createProject() {
 }
 
 // searches for project to delete using input of user and button id
-export function deleteProject(userInput) {
+export function deleteProject(btnDeleteEvent, btnProj) {
     console.log("function deleteProject");
-    //console.log(`Project Name (innerHTML of Button): ${userInput}`);
-    if (userInput != "default") {
+    console.log(`btnDeleteEvent: ${btnDeleteEvent.target.id} btn: ${btnProj.id}`)
 
+    // get parent
+    const containerParent = document.querySelector("#project-display-buttons");
+    // create id for project/delete buttons
+    const projectId = `#${btnProj.id}`;
+    const deleteId = `#${btnDeleteEvent.target.id}`;
+    // get buttons
+    const btnProject = document.querySelector(projectId);
+    const btnDelete = document.querySelector(deleteId);
+    // remove buttons
+    containerParent.removeChild(btnDelete);
+    containerParent.removeChild(btnProject);
 
-        // if user input is found in button list, set to true so data will be searched also
-        let projectFound = false;
-        // deleting default project is not possible
+    // check if data is empty or not (check for existing todos in project)
+    let targetButtonId = btnProject.id;
+    if (data.length > 0) {
+        //console.log("data length bigger than 0, search and remove data if needed")
 
-        // use innerHTML to get correct project button and so the id
-        // Get the parent element
-        const containerParent = document.querySelector("#project-display-buttons");
-        // Get all child elements
-        const buttons = containerParent.children;
-        //console.log(buttons);
-        let targetButtonId;
-        // compare user Input to button ids (project)
-        for (let i = 0; i < buttons.length; i++) {
-            const text = buttons[i].innerHTML;
-            // if user input is equal to button text, get button id
-            if (text === userInput) {
-                console.log(`project found: ${text} | button.id: ${buttons[i].id}`);
-                targetButtonId = buttons[i].id;
-                projectFound = true;
-            }
-        }
+        // iterate over data and delete all todos
+        for (let i = 0; i < data.length; i++) {
+            if (data[i]["buttonId"] === targetButtonId) {
+                console.log("project todo found")
+                console.log(data[i])
+                data.splice(i, 1);
 
-        console.log(`targetButtonId: ${targetButtonId}`);
-        // check if user input was correct and project was found in loop
-        if (projectFound === true) {
-            // remove button from DOM
-            //console.log("project button was found, remove from DOM");
-            // check if data is empty or not (check for existing todos in project)
-            if (data.length > 0) {
-                //console.log("data length bigger than 0, search and remove data if needed")
-
-                // iterate over data and delete all todos
-                for (let i = 0; i < data.length; i++) {
-                    if (data[i]["buttonId"] === targetButtonId) {
-                        console.log("project todo found")
-                        console.log(data[i])
-                        data.splice(i, 1);
-
-                        i = -1;
-                    }
-                    console.log(data);
-                    console.log(i);
-                }
-
-
+                i = -1;
             }
             console.log(data);
-
-            // remove button (project) from DOM
-            for (let i = 0; i < buttons.length; i++) {
-                const button = buttons[i];
-                if (button.id === targetButtonId) {
-                    containerParent.removeChild(button);
-                    i = -1;
-                }
-            }
-            // rerender list above...if nothing there default
-            // change last button pressed to one above
-            const buttonDefault = document.querySelector("#btn-newProject-0");
-            checkForToDoList(buttonDefault.id);
-
+            console.log(i);
         }
     }
-    else {
-        alert("default Project can't be deleted");
-        
-    }
-
+    // this doesn't work because default can be removed
+    //const buttonDefault = document.querySelector("#btn-newProject-0");
+    checkForToDoList("noBtnDefault");
 }
 
 function getButtonCount() {

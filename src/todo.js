@@ -43,7 +43,11 @@ function todo(buttonId, todoId, checkbox, title, description, dueDate, priority)
 export function getLastButtonPressed(btn) {
     console.log("function getLastButtonPressed"); 
     // first time it is called not with eventlistener but directly with button.id
-    if (typeof btn === 'string') {
+    // if "noBtnDefault" button default was deleted
+    if(btn === "noBtnDefault") {
+        return
+    }
+    else if (typeof btn === 'string') {
         console.log("if string")
         lastActiveButton.active = btn;
     }

@@ -16,16 +16,16 @@ createDefaultProject();
 
 // get button create from main page
 const btnAddProject = document.querySelector("#btn-addProject");
-const btnDeleteProject = document.querySelector("#btn-deleteProject");
+// const btnDeleteProject = document.querySelector("#btn-deleteProject");
 const btnAddToDo = document.querySelector("#btn-addToDo");
 // add eventlistener for button create
 btnAddProject.addEventListener("click", () => {
     openWindowProject();
 })
 
-btnDeleteProject.addEventListener("click", () => {
-    openWindowDeleteProject();
-})
+// btnDeleteProject.addEventListener("click", () => {
+//     openWindowDeleteProject();
+// })
 
 
 

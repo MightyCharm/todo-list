@@ -75,8 +75,9 @@ export function openWindowProject() {
 }
 
 // change window into delete project
-export function openWindowDeleteProject() {
+export function openWindowDeleteProject(btnDeleteEvent, btnProject) {
     console.log("function openWindowDeleteProject");
+    // console.log(`btnDeleteEvent: ${btnEvent.currentTarget.id} btn: ${btnProject.id}`)
 
     // set button state
     setButtonState(OPEN_WINDOW);
@@ -132,8 +133,17 @@ export function openWindowDeleteProject() {
     form.append(inputSubmit);
 
     form.addEventListener("submit", (event) => {
-        validateWindowDeleteProject(event);
+        callFunctionValidateWindowDeleteProject(event);
     })
+
+    function callFunctionValidateWindowDeleteProject(formEvent) {
+        console.log("function callFunctionValidateWindowDeleteProject");
+        // arguments;
+        // formEvent = submit event form
+        // btnDeleteEvent = click event from delete button
+        // btnProject = button element from project so it can be deleted
+        validateWindowDeleteProject(formEvent, btnDeleteEvent, btnProject);
+    }
 
     // get projects names with function so number of rows will be calculated
     deleteProject.append(header);
@@ -329,11 +339,11 @@ function validateWindowProject(e) {
     removeAllToDo();
 }
 
-function validateWindowDeleteProject(e) {
+function validateWindowDeleteProject(formEvent, btnDeleteEvent, btnProject) {
     console.log("function validateWindowDeleteProject");
-    e.preventDefault();
-    const userInput = e.currentTarget["project-input"].value;
-    deleteProject(userInput);
+    formEvent.preventDefault();
+    // const userInput = formEvent.currentTarget["project-input"].value;
+    deleteProject(btnDeleteEvent, btnProject);
     closeWindowProject();
 }
 
@@ -400,6 +410,7 @@ function setButtonState(window) {
 // function takes last button pressed (project) and searches for todos
 export function checkForToDoList(btn) {
     console.log("function checkForToDoList");
+    
     getLastButtonPressed(btn);
     removeAllToDo();
     for (let i = 0; i < data.length; i++) {
@@ -408,6 +419,7 @@ export function checkForToDoList(btn) {
             renderToDoList(data[i])
         }
     }
+        
 
     console.log(`last button pressed: ${lastActiveButton.active}`)
 }
