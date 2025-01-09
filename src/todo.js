@@ -1,8 +1,8 @@
 import { data } from "./index.js";
-import { lastActiveButton } from "./project.js";
 import { checkForToDoList } from "./render.js";
 
-let todoCount = -1; // used to create a unique id for todo
+// used to create a unique id for todo
+let todoCount = -1;
 
 
 export function getInputNewToDo() {
@@ -19,7 +19,7 @@ export function getInputNewToDo() {
 
     let todoId = getToDoId(); // create unique id for one single todo
     let checkbox = false;
-    const obj = todo( lastActiveButton.active, todoId, checkbox, title, description, dueDate, priority);
+    const obj = todo(lastActiveButton.active, todoId, checkbox, title, description, dueDate, priority);
 
     data.push(obj);
     // after new todo was created, render todos again
@@ -40,29 +40,12 @@ function todo(buttonId, todoId, checkbox, title, description, dueDate, priority)
     }
 }
 
-export function getLastButtonPressed(btn) {
-    console.log("function getLastButtonPressed"); 
-    // first time it is called not with eventlistener but directly with button.id
-    // if "noBtnDefault" button default was deleted
-    if(btn === "noBtnDefault") {
-        return
-    }
-    else if (typeof btn === 'string') {
-        console.log("if string")
-        lastActiveButton.active = btn;
-    }
-    // if called with eventlistener get btn.target.id
-    else {
-        lastActiveButton.active = btn.target.id;
-    }
-    // console.log(`last active button: ${lastActiveButton.active}`);
-}
 
 export function setColorInputPriority(divPriorityInput, priority) {
     console.log("function getColorInputPriority");
     switch (priority) {
         case "low":
-            divPriorityInput.style.backgroundColor = "blue"           
+            divPriorityInput.style.backgroundColor = "blue"
             break;
         case "normal":
             divPriorityInput.style.backgroundColor = "green"
@@ -71,7 +54,7 @@ export function setColorInputPriority(divPriorityInput, priority) {
             divPriorityInput.style.backgroundColor = "red";
             break;
     }
-    divPriorityInput.style.color = "white"   
+    divPriorityInput.style.color = "white"
 }
 
 export function deleteToDo(btn) {
@@ -79,13 +62,13 @@ export function deleteToDo(btn) {
     //console.log(btn.target.id);
     const id = btn.target.id; // id of todo is the same as id of button inside todo
     outerLoop: for (let i = 0; i < data.length; i++) {
-            // console.log(data[i].todoId);
-            if(data[i].todoId === id) {
-                console.log("found...remove from data");
-                data.splice(i, 1);
-                break outerLoop;
-            }
-            console.log("hello");
+        // console.log(data[i].todoId);
+        if (data[i].todoId === id) {
+            console.log("found...remove from data");
+            data.splice(i, 1);
+            break outerLoop;
+        }
+        console.log("hello");
     }
     const container = document.querySelector(`#todo-list`);
     const todo = document.querySelector(`#${id}`);
@@ -112,17 +95,17 @@ export function setCheckboxState(checkbox) {
     const arrId = checkboxId.split("-"); // split id to get array
     const id = arrId[2]; // last part of array todoId in data
     console.log(id);
-    
+
     // iterate over todos
-    for(let i=0; i<data.length; i++) {
-        if(data[i].todoId === id) {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].todoId === id) {
             console.log("found todo in dataset using todoId");
-            if(data[i].checkbox === false) {
+            if (data[i].checkbox === false) {
                 data[i].checkbox = true;
                 break
             }
             data[i].checkbox = false;
             break;
         }
-    }   
+    }
 }

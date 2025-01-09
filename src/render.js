@@ -1,12 +1,11 @@
 /* module renders windows for project and todo creation */
-import { createProject, deleteProject, lastActiveButton } from "./project.js";
-import { getInputNewToDo, getLastButtonPressed, setColorInputPriority, deleteToDo, setCheckboxState } from "./todo.js";
+import { createProject, deleteProject, getLastButtonPressed, setLastButtonPressed } from "./project.js";
+import { getInputNewToDo, setColorInputPriority, deleteToDo, setCheckboxState } from "./todo.js";
 import { data } from "./index.js";
 
 // sets button state, if  a window is open buttons in the background are deactivated
 const OPEN_WINDOW = "openWindow";
 const CLOSE_WINDOW = "closeWindow";
-
 
 // function creates (opens) new window so user can create new projects
 export function openWindowProject() {
@@ -17,17 +16,17 @@ export function openWindowProject() {
 
     // create small window for new project creation
     const createProject = document.createElement("div");
-    createProject.className = "project";
-    createProject.id = "project"
+    createProject.className = "create-project";
+    createProject.id = "create-project"
 
     // create info text for window
-    const header = document.createElement("h2");
-    header.className = "project-header";
+    const header = document.createElement("div");
+    header.className = "create-projectHeader";
     header.innerHTML = "Create a new Project";
 
     // create button to close window
     const buttonClose = document.createElement("button");
-    buttonClose.className = "button-close";
+    buttonClose.className = "create-projectBtnClose";
     buttonClose.innerHTML = "X";
     buttonClose.addEventListener("click", () => {
         closeWindowProject();
@@ -39,10 +38,10 @@ export function openWindowProject() {
     const input = document.createElement("input");
     const inputSubmit = document.createElement("input");
 
-    form.className = "project-form";
-    label.className = "project-label";
-    input.className = "project-input";
-    inputSubmit.className = "input-submit"
+    form.className = "create-projectForm";
+    label.className = "create-projectLabel";
+    input.className = "create-projectInput";
+    inputSubmit.className = "project-btnSubmit"
 
     input.id = "project-input"
     input.maxLength = 15;
@@ -78,7 +77,8 @@ export function openWindowProject() {
 export function openWindowDeleteProject(btnDeleteEvent, btnProject) {
     console.log("function openWindowDeleteProject");
     // console.log(`btnDeleteEvent: ${btnEvent.currentTarget.id} btn: ${btnProject.id}`)
-
+    // get name of project
+    const name = btnProject.innerHTML;
     // set button state
     setButtonState(OPEN_WINDOW);
     // get main container
@@ -86,73 +86,66 @@ export function openWindowDeleteProject(btnDeleteEvent, btnProject) {
 
     // create small window for new project creation
     const deleteProject = document.createElement("div");
-    deleteProject.className = "project";
-    deleteProject.id = "project"
+    deleteProject.className = "delete-project";
+    deleteProject.id = "delete-project"
 
     // create info text for window
-    const header = document.createElement("h2");
-    header.className = "project-header";
+    const header = document.createElement("div");
+    header.className = "delete-projectHeader";
     header.innerHTML = "Delete Project";
 
     // create button to close window
-    const buttonClose = document.createElement("button");
-    buttonClose.className = "button-close";
-    buttonClose.innerHTML = "X";
-    buttonClose.addEventListener("click", () => {
-        closeWindowProject();
+    const btnClose = document.createElement("button");
+    btnClose.className = "delete-projectBtnClose";
+    btnClose.innerHTML = "X";
+    btnClose.addEventListener("click", () => {
+        closeWindowDeleteProject();
     });
 
-    // create label and input field so user can enter name of new project
-    const form = document.createElement("form");
-    const label = document.createElement("label");
-    const input = document.createElement("input");
-    const inputSubmit = document.createElement("input");
+    // create text
+    const textElement = document.createElement("div");
+    textElement.className = "delete-projectText";
+    textElement.innerHTML = `Do you really want to delete Project ${name}?`;
+    
+     // create container for buttons confirm and deny
+    const containerButtons = document.createElement("div");
+    containerButtons.className = "delete-projectContainerBtns";
+    
+    // create button to confirm choice
+    const btnConfirm = document.createElement("button");
+    btnConfirm.className = "delete-projectBtnConfirm";
+    btnConfirm.innerHTML = "YES";
 
-    form.className = "project-form";
-    label.className = "project-label";
-    input.className = "project-input";
-    inputSubmit.className = "input-submit"
-
-    input.id = "project-input"
-    input.maxLength = 15;
-    input.placeholder = "Enter name and press confirm";
-    input.required = true;
+    // create button to deny choice
+    const btnDeny = document.createElement("button");
+    btnDeny.className = "delete-projectBtnDeny"
+    btnDeny.innerHTML = "NO";
 
 
-    // connect label with input field using for attribute
-    label.htmlFor = input.id;
-
-    input.setAttribute("type", "text");
-    label.innerHTML = "Project Name";
-
-    inputSubmit.setAttribute("type", "submit");
-    inputSubmit.setAttribute("value", "Submit");
-
-    form.append(label);
-    form.append(input);
-    form.append(inputSubmit);
-
-    form.addEventListener("submit", (event) => {
-        callFunctionValidateWindowDeleteProject(event);
+    btnConfirm.addEventListener("click", (event) => {
+        callValidateWindowDeleteProject(event);
     })
 
-    function callFunctionValidateWindowDeleteProject(formEvent) {
+    function callValidateWindowDeleteProject(event) {
         console.log("function callFunctionValidateWindowDeleteProject");
-        // arguments;
-        // formEvent = submit event form
-        // btnDeleteEvent = click event from delete button
-        // btnProject = button element from project so it can be deleted
-        validateWindowDeleteProject(formEvent, btnDeleteEvent, btnProject);
+        validateWindowDeleteProject(event, btnDeleteEvent, btnProject);
     }
 
-    // get projects names with function so number of rows will be calculated
+    btnDeny.addEventListener("click", () => {
+        closeWindowDeleteProject();
+    })
+
+    containerButtons.append(btnConfirm);
+    containerButtons.append(btnDeny);
+
     deleteProject.append(header);
-    deleteProject.append(buttonClose);
-    deleteProject.append(form);
-    
+    deleteProject.append(btnClose);
+    deleteProject.append(textElement);
+    deleteProject.append(containerButtons);
+
     // append window created to main container
     container.append(deleteProject);
-    
+
 }
 
 // function create (opens) new window so user can create a new todo for the selected project
@@ -169,12 +162,12 @@ export function openWindowToDo() {
 
     // create header
     const header = document.createElement("header");
-    header.className = "create-todo-header";
+    header.className = "create-todoHeader";
     header.innerHTML = "Create a ToDo";
 
     // create button to close window
     const buttonClose = document.createElement("button");
-    buttonClose.className = "button-close";
+    buttonClose.className = "create-todoBtnClose";
     buttonClose.innerHTML = "X";
     buttonClose.addEventListener("click", () => {
         closeWindowToDo();
@@ -182,8 +175,8 @@ export function openWindowToDo() {
 
     // create form for label and input
     const form = document.createElement("form");
-    form.className = "create-todo-form";
-    form.id = "create-todo-form";
+    form.className = "create-todoForm";
+    form.id = "create-todoForm";
 
     form.addEventListener("submit", (event) => {
         validateInputToDoWindow(event);
@@ -213,25 +206,25 @@ export function openWindowToDo() {
     const inputSubmit = document.createElement("input");
 
     // add class to container for labels and input
-    divTitle.className = "create-todo-divContainer-title";
-    divDescription.className = "create-todo-divContainer-description";
-    divDueDate.className = "create-todo-divContainer-dueDate";
-    divPriority.className = "create-todo-divContainer-priority";
+    divTitle.className = "create-todoContainerTitle";
+    divDescription.className = "create-todoContainerDescription";
+    divDueDate.className = "create-todoContainerDueDate";
+    divPriority.className = "create-todoContainerPriority";
 
     // add class to labels
-    labelTitle.className = "create-todo-label";
-    labelDescription.className = "create-todo-label";
-    labelDueDate.className = "create-todo-label create-todo-label-dueDate";
-    labelPriority.className = "create-todo-label create-todo-label-priority";
+    labelTitle.className = "create-todoLabel";
+    labelDescription.className = "create-todoLabel";
+    labelDueDate.className = "create-todoLabel create-todoLabelDueDate";
+    labelPriority.className = "create-todoLabel create-todoLabelPriority";
     // add class to inputs
-    inputTitle.className = "create-todo-input-title";
-    inputDescription.className = "create-todo-input-description";
-    inputDueDate.className = "create-todo-input-dueDate";
-    selectPriority.className = "create-todo-selectPriority";
-    optionLow.className = "create-todo-optionLow";
-    optionNormal.className = "create-todo-optionNormal";
-    optionHigh.className = "create-todo-optionHigh";
-    inputSubmit.className = "input-submit input-submit-todo";
+    inputTitle.className = "create-todoInputTitle";
+    inputDescription.className = "create-todoInputDescription";
+    inputDueDate.className = "create-todoInputDueDate";
+    selectPriority.className = "create-todoSelectPriority";
+    optionLow.className = "create-todoOptionLow";
+    optionNormal.className = "create-todoOptionNormal";
+    optionHigh.className = "create-todoOptionHigh";
+    inputSubmit.className = "create-todoSubmit";
     // add id to inputs
     inputTitle.id = "create-todo-input-title";
     inputDescription.id = "create-todo-input-description";
@@ -309,11 +302,19 @@ export function openWindowToDo() {
 
 // function removes window for creating/deleting a project
 function closeWindowProject() {
+    const container = document.querySelector("#container");
+    const window = document.querySelector("#create-project");
+    container.removeChild(window);
     // set button state
     setButtonState(CLOSE_WINDOW);
+}
+
+function closeWindowDeleteProject() {
     const container = document.querySelector("#container");
-    const window = document.querySelector("#project");
+    const window = document.querySelector("#delete-project");
     container.removeChild(window);
+    // set button state
+    setButtonState(CLOSE_WINDOW);
 }
 
 /* removes window for todo's from DOM and changes button states */
@@ -323,31 +324,26 @@ function closeWindowToDo() {
     const container = document.querySelector("#container");
     const window = document.querySelector("#create-todo");
     container.removeChild(window);
-
-    const btnAddProject = document.querySelector("#btn-addProject");
-    const buttonDelete = document.querySelector("#btn-deleteProject");
-    const btnAddToDo = document.querySelector("#btn-addToDo");
-    btnAddProject.disabled = false;
-    buttonDelete.disabled = false;
-    btnAddToDo.disabled = false;
+    setButtonState(CLOSE_WINDOW);
 }
 
 function validateWindowProject(e) {
     e.preventDefault();
     createProject();
     closeWindowProject();
-    removeAllToDo();
+    removeAllToDoGUI();
 }
 
-function validateWindowDeleteProject(formEvent, btnDeleteEvent, btnProject) {
+function validateWindowDeleteProject(event, btnDeleteEvent, btnProject) {
     console.log("function validateWindowDeleteProject");
-    formEvent.preventDefault();
+    event.preventDefault();
     // const userInput = formEvent.currentTarget["project-input"].value;
     deleteProject(btnDeleteEvent, btnProject);
-    closeWindowProject();
+    closeWindowDeleteProject();
 }
 
 function validateInputToDoWindow(e) {
+    console.log("function validateInputToDoWindow");
     e.preventDefault();
     getInputNewToDo(); // get data
     closeWindowToDo();
@@ -355,11 +351,12 @@ function validateInputToDoWindow(e) {
 
 function setButtonState(window) {
     const btnAddProject = document.querySelector("#btn-addProject");
-    const btnDeleteProject = document.querySelectorAll("#btn-deleteProject");
     const btnAddToDo = document.querySelector("#btn-addToDo");
-    const buttonProjects = document.querySelectorAll(".button-newProject");
-    const buttonToDo = document.querySelectorAll(".todo-button");
-    const checkboxToDo = document.querySelectorAll(".todo-checkbox");
+
+    const btnsDeleteProject = document.querySelectorAll(".btn-deleteProject");
+    const btnsProjects = document.querySelectorAll(".btn-newProject");
+    const btnsToDo = document.querySelectorAll(".todo-button");
+    const btnsCheckboxToDo = document.querySelectorAll(".todo-checkbox");
 
     // console.log(window);
     switch (window) {
@@ -367,35 +364,34 @@ function setButtonState(window) {
             // disable buttons
             btnAddProject.disabled = true;
             btnAddToDo.disabled = true;
-            buttonProjects.forEach((button) => {
+            btnsProjects.forEach((button) => {
                 button.disabled = true;
             })
-            btnDeleteProject.forEach( (button) => {
+            btnsDeleteProject.forEach((button) => {
                 button.disabled = true;
             })
-            buttonToDo.forEach((button) => {
+            btnsToDo.forEach((button) => {
                 button.disabled = true;
             })
-            checkboxToDo.forEach((button) => {
+            btnsCheckboxToDo.forEach((button) => {
                 button.disabled = true;
             })
             break;
         case "closeWindow":
             // enable buttons
             btnAddProject.disabled = false;
-            btnDeleteProject.disabled = false;
             btnAddToDo.disabled = false;
-            buttonProjects.forEach((button) => {
+            btnsProjects.forEach((button) => {
                 //console.log(button);
                 button.disabled = false;
             })
-            btnDeleteProject.forEach( (button) => {
+            btnsDeleteProject.forEach((button) => {
                 button.disabled = false;
             })
-            buttonToDo.forEach((button) => {
+            btnsToDo.forEach((button) => {
                 button.disabled = false;
             })
-            checkboxToDo.forEach((button) => {
+            btnsCheckboxToDo.forEach((button) => {
                 button.disabled = false;
             })
             break;
@@ -403,25 +399,32 @@ function setButtonState(window) {
             console.log("something went wrong");
     }
 
-
-
 }
 
 // function takes last button pressed (project) and searches for todos
-export function checkForToDoList(btn) {
+// optional argument remove is true if function was called from delete project
+export function checkForToDoList(event, remove = false) {
     console.log("function checkForToDoList");
-    
-    getLastButtonPressed(btn);
-    removeAllToDo();
+  
+    setLastButtonPressed(event, remove);
+    removeAllToDoGUI();
     for (let i = 0; i < data.length; i++) {
         // if this project has todos, call function to render
-        if (data[i]["buttonId"] == lastActiveButton.active) {
+        if (data[i]["buttonId"] == getLastButtonPressed()) {
             renderToDoList(data[i])
         }
     }
-        
+    console.log(`last button pressed: ${getLastButtonPressed()}`);
+}
 
-    console.log(`last button pressed: ${lastActiveButton.active}`)
+// function will remove all todos from todo-list before rendering
+function removeAllToDoGUI() {
+    console.log("function removeAllToDo");
+    const todoList = document.querySelector("#todo-list");
+
+    while (todoList.firstChild) {
+        todoList.removeChild(todoList.firstChild);
+    }
 }
 
 // function will render todos found
@@ -589,27 +592,33 @@ function renderToDoList(obj) {
     // change color of text priority
     setColorInputPriority(priorityInput, priority);
     // check data if checkbox is checked or not
-    for(let i=0; i<data.length; i++) {
-        if(data[i].todoId === todoId) {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].todoId === todoId) {
             console.log("found todo in data");
             console.log(data[i]);
-            if(data[i].checkbox === false) {
+            if (data[i].checkbox === false) {
                 checkbox.checked = false;
                 break;
             }
             checkbox.checked = true;
-
         }
     }
 
 }
 
-// function will remove all todos from todo-list before rendering
-function removeAllToDo() {
-    console.log("function removeAllToDo");
-    const todoList = document.querySelector("#todo-list");
-
-    while (todoList.firstChild) {
-        todoList.removeChild(todoList.firstChild);
+export function renderProjectName() {
+    console.log("function renderProjectName()");
+    // console.log(`lastButtonPressed: ${lastButtonId} typeof: ${typeof lastButtonId}`);
+    // get element which displays the name of the project in gui
+    const elementProjectName = document.querySelector("#project-name");
+    // get last button pressed for innerHTML (project name);
+    const lastButtonId = `#${getLastButtonPressed()}`;
+    const lastButtonPressed = document.querySelector(lastButtonId);
+    // if an element was found, change text in gui
+    console.log(lastButtonPressed);
+    if(lastButtonPressed) {
+        elementProjectName.innerHTML = lastButtonPressed.innerHTML;
+        return
     }
+    elementProjectName.innerHTML = "";
 }

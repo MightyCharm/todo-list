@@ -1,6 +1,6 @@
 import "./styles.css";
 import { createDefaultProject } from "./project.js";
-import { openWindowProject, openWindowDeleteProject, openWindowToDo } from "./render.js";
+import { openWindowProject, openWindowToDo } from "./render.js";
 
 // this variable will save all different projects and their todos
 // used in:
@@ -8,7 +8,6 @@ import { openWindowProject, openWindowDeleteProject, openWindowToDo } from "./re
 // render.js: access key to load values
 export const data = [];
 
-// export const lastButtonPressed = { button: ""};
 
 // create default project on first load
 createDefaultProject();
@@ -22,12 +21,6 @@ const btnAddToDo = document.querySelector("#btn-addToDo");
 btnAddProject.addEventListener("click", () => {
     openWindowProject();
 })
-
-// btnDeleteProject.addEventListener("click", () => {
-//     openWindowDeleteProject();
-// })
-
-
 
 btnAddToDo.addEventListener("click", () => {
     openWindowToDo();
