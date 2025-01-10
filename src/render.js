@@ -608,7 +608,6 @@ function renderToDoList(obj) {
 
 export function renderProjectName() {
     console.log("function renderProjectName()");
-    // console.log(`lastButtonPressed: ${lastButtonId} typeof: ${typeof lastButtonId}`);
     // get element which displays the name of the project in gui
     const elementProjectName = document.querySelector("#project-name");
     // get last button pressed for innerHTML (project name);
@@ -618,7 +617,19 @@ export function renderProjectName() {
     console.log(lastButtonPressed);
     if(lastButtonPressed) {
         elementProjectName.innerHTML = lastButtonPressed.innerHTML;
+        markSelectedProject(lastButtonPressed);
         return
     }
     elementProjectName.innerHTML = "";
+}
+
+function markSelectedProject(lastButtonPressed) {
+    console.log("function markSelectedProject");
+    // clear all elements from border
+    const allProjects = document.querySelectorAll(".btn-newProject");
+    allProjects.forEach( (project) => {
+        project.style.backgroundColor = "deeppink";
+    });
+    // set new border selected project
+    lastButtonPressed.style.backgroundColor = "#1a97ea";
 }

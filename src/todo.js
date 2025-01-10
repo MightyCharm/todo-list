@@ -1,9 +1,9 @@
 import { data } from "./index.js";
 import { checkForToDoList } from "./render.js";
+import { getLastButtonPressed } from "./project.js";
 
 // used to create a unique id for todo
 let todoCount = -1;
-
 
 export function getInputNewToDo() {
     console.log("function getInputToDo");
@@ -19,11 +19,11 @@ export function getInputNewToDo() {
 
     let todoId = getToDoId(); // create unique id for one single todo
     let checkbox = false;
-    const obj = todo(lastActiveButton.active, todoId, checkbox, title, description, dueDate, priority);
+    const obj = todo(getLastButtonPressed(), todoId, checkbox, title, description, dueDate, priority);
 
     data.push(obj);
     // after new todo was created, render todos again
-    checkForToDoList(lastActiveButton.active);
+    checkForToDoList(getLastButtonPressed());
 }
 
 // factory function for creates object todo

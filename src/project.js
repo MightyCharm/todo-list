@@ -111,7 +111,7 @@ export function setLastButtonPressed(btn, remove = false) {
 }
 
 export function getLastButtonPressed() {
-    console.log("function getLastButtonPressed()");
+    console.log("function getLastButtonPressed");
     return lastActiveButton.active;
 }
 
