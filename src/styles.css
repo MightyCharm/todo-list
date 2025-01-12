@@ -7,18 +7,20 @@
 }
 
 :root {
-    --button-background: #1a97ea;
-    --button-color: #fff;
-    --button-background-hover: #1887d1;
-    --button-background-disabled: #383636;
-    --button-2-background: deeppink;
-    --button-2-background-hover: rgb(255, 42, 155);
-    --background-color-todo-text: rgb(181, 181, 181);
-
+    --background-windows: #2c2c2c;
+    --background-color-todo-text: rgb(181, 181, 181); /* bg of Title/Description... */
     --border-windows: 1px solid #898989;
     --border-radius: 4px;
-    --background-windows: #2c2c2c;
     --padding-window: 0.6rem;
+
+    --btn-bg: #1a97ea;
+    --btn-color: #fff;
+    --btn-bg-hover: #1887d1;
+    --btn-bg-disabled: #383636;
+    --btn-project-bg-normal: deeppink;
+    --btn-project-bg-hover: rgb(253, 97, 180);
+    --btn-project-bg-selected: 3px solid red;
+    --transition-time-hover: 1s;
 }
 
 body {
@@ -80,16 +82,17 @@ body {
     height: 60px;
     border-radius: 50%;
     border: none;
-    background-color: var(--button-background);
+    background-color: var(--btn-bg);
     color: var(--button-color);
+    transition: background-color var( --transition-time-hover);
 }
 
 .btn-addProject:hover {
-    background-color: var(--button-background-hover);
+    background-color: var(--btn-bg-hover);
 }
 
 .btn-addProject:disabled {
-    background-color: var(--button-background-disabled);
+    background-color: var(--btn-bg-disabled);
 }
 
 /* create todo section (2row)*/
@@ -111,16 +114,18 @@ body {
     height: 60px;
     border-radius: 50%;
     border: none;
-    background-color: var(--button-background);
+    background-color: var(--btn-bg);
     color: var(--button-color);
+    transition: background-color var(--transition-time-hover);
 }
 
 .btn-addToDo:hover {
-    background-color: var(--button-background-hover);
+    background-color: var(--btn-bg-hover);
+    
 }
 
 .btn-addToDo:disabled {
-    background-color: var(--button-background-disabled);
+    background-color: var(--btn-bg-disabled);
 }
 
 /* text and buttons for projects (3row) */
@@ -168,20 +173,27 @@ body {
 }
 
 .btn-newProject {
-    background-color: var(--button-2-background);
     border: none;
     width: 100%;
     border-radius: 4px;
-    
+    transition: background-color var(--transition-time-hover);  
 }
 
-.btn-newProject:hover {
-    background-color: var(--button-2-background-hover);
+.btn-normal {
+    background-color: var(--btn-project-bg-normal);
+}
+
+.btn-selected {
+    border:  var(--btn-project-bg-selected);
+}
+
+.btn-hover:hover {
+    background-color: var(--btn-project-bg-hover);
     color: #000;
 }
 
-.btn-newProject:disabled {
-    background-color: var(--button-background-disabled);
+.btn-disabled:disabled {
+    background-color: var(--btn-bg-disabled);
     color: white;
 }
 
@@ -193,6 +205,7 @@ body {
     border: none;
     background-color: rgb(255, 0, 0);
     color: rgb(255, 255, 255);
+    transition: background-color var(--transition-time-hover);
 }
 
 .btn-deleteProject:hover {
@@ -200,7 +213,7 @@ body {
 }
 
 .btn-deleteProject:disabled {
-    background-color: var(--button-background-disabled);
+    background-color: var(--btn-bg-disabled);
 }
 
 /* created with JavaScript */
@@ -238,11 +251,12 @@ body {
 
     display: grid;
     align-items: center;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
     column-gap: 0.5rem;
 }
 
 .create-projectLabel {
+    
 }
 
 .create-projectInput {
@@ -253,17 +267,17 @@ body {
 }
 
 .project-btnSubmit {
-    background-color: var(--button-background);
+    background-color: var(--btn-bg);
     color: var(--button-color);
     border: none;
     width: 90%;
     height: 100%;
     border-radius: var(--border-radius);
-    
+    transition: background-color var(--transition-time-hover);
 }
 
 .project-btnSubmit:hover {
-    background-color: var(--button-background-hover);
+    background-color: var(--btn-bg-hover);
 }
 
 .create-projectBtnClose {
@@ -275,12 +289,13 @@ body {
     border: none;
     width: 25px;
     height: 25px;
+
+    transition: background-color var(--transition-time-hover);
 }
 
 .create-projectBtnClose:hover {
     background-color: rgb(178, 23, 23);
 }
-
 
 .delete-project {
     position: absolute;
@@ -317,6 +332,7 @@ body {
     border: none;
     width: 25px;
     height: 25px;
+    transition: background-color var(--transition-time-hover);
 }
 
 .delete-projectBtnClose:hover {
@@ -337,35 +353,37 @@ body {
 .delete-projectBtnConfirm {
     width: 70px;
     height: 40px;
-    background-color: var(--button-background);
-    color: var(--button-color);
+    background-color: var(--btn-bg);
+    color: var(--btn-color);
     border: none;
     border-radius: var(--border-radius);
+    transition: background-color var(--transition-time-hover);
 }
 
 .delete-projectBtnConfirm:hover {
-    background-color: var(--button-background-hover);
+    background-color: var(--btn-bg-hover);
 }
 
 .delete-projectBtnConfirm:disabled {
-    background-color: var(--button-background-disabled);
+    background-color: var(--btn-bg-disabled);
 }
 
 .delete-projectBtnDeny {
     width: 70px;
     height: 40px;
-    background-color: var(--button-background);
+    background-color: var(--btn-bg);
     color: var(--button-color);
     border: none;
     border-radius: var(--border-radius);
+    transition: background-color var(--transition-time-hover);
 }
 
 .delete-projectBtnDeny:hover {
-    background-color: var(--button-background-hover);
+    background-color: var(--btn-bg-hover);
 }
 
 .delete-projectBtnDeny:disabled {
-    background-color: var(--button-background-disabled);
+    background-color: var(--btn-bg-disabled);
 }
 
 /* window for creating new todos */
@@ -379,7 +397,7 @@ body {
     border: var(--border-windows);
     border-radius: var(--border-radius);
     padding: var(--padding-window);
-    background-color: var(background-windows);
+    background-color: var(--background-windows);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -402,6 +420,7 @@ body {
     border: none;
     width: 25px;
     height: 25px;
+    transition: background-color var(--transition-time-hover);
 }
 
 .create-todoBtnClose:hover {
@@ -508,12 +527,13 @@ body {
     height: 100%;
     border: none;
     border-radius: var(--border-radius);
-    background-color: var(--button-background);
+    background-color: var(--btn-bg);
     color: var(--button-color);
+    transition: background-color var(--transition-time-hover);
 }
 
 .create-todoSubmit:hover {
-    background-color: var(--button-background-hover);
+    background-color: var(--btn-bg-hover);
 }
 
 
@@ -532,7 +552,6 @@ body {
 /* todo element */
 .todo {
     align-self: start;
-    /* border: 1px solid black; */
     background-color: #515050;
     /* create grid like before */
     display: grid;
@@ -542,8 +561,7 @@ body {
     height: 100px;
 
     min-width: 900px;
-    border-radius: var(--border-radius)
-
+    border-radius: var(--border-radius);
 }
 
 .todo-title {
@@ -669,6 +687,6 @@ body {
 }
 
 .todo-button:disabled {
-    background-color: var(--button-background-disabled);
+    background-color: var(--btn-bg-disabled);
     color: white;
 }

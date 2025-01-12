@@ -106,11 +106,11 @@ export function openWindowDeleteProject(btnDeleteEvent, btnProject) {
     const textElement = document.createElement("div");
     textElement.className = "delete-projectText";
     textElement.innerHTML = `Do you really want to delete Project ${name}?`;
-    
-     // create container for buttons confirm and deny
+
+    // create container for buttons confirm and deny
     const containerButtons = document.createElement("div");
     containerButtons.className = "delete-projectContainerBtns";
-    
+
     // create button to confirm choice
     const btnConfirm = document.createElement("button");
     btnConfirm.className = "delete-projectBtnConfirm";
@@ -366,15 +366,19 @@ function setButtonState(window) {
             btnAddToDo.disabled = true;
             btnsProjects.forEach((button) => {
                 button.disabled = true;
+                button.classList.add("btn-disabled");
             })
             btnsDeleteProject.forEach((button) => {
                 button.disabled = true;
+                button.classList.add("btn-disabled");
             })
             btnsToDo.forEach((button) => {
                 button.disabled = true;
+                button.classList.add("btn-disabled");
             })
             btnsCheckboxToDo.forEach((button) => {
                 button.disabled = true;
+                button.classList.add("btn-disabled");
             })
             break;
         case "closeWindow":
@@ -384,6 +388,7 @@ function setButtonState(window) {
             btnsProjects.forEach((button) => {
                 //console.log(button);
                 button.disabled = false;
+                button.classList.remove("btn-disabled");
             })
             btnsDeleteProject.forEach((button) => {
                 button.disabled = false;
@@ -405,7 +410,7 @@ function setButtonState(window) {
 // optional argument remove is true if function was called from delete project
 export function checkForToDoList(event, remove = false) {
     console.log("function checkForToDoList");
-  
+
     setLastButtonPressed(event, remove);
     removeAllToDoGUI();
     for (let i = 0; i < data.length; i++) {
@@ -615,7 +620,7 @@ export function renderProjectName() {
     const lastButtonPressed = document.querySelector(lastButtonId);
     // if an element was found, change text in gui
     console.log(lastButtonPressed);
-    if(lastButtonPressed) {
+    if (lastButtonPressed) {
         elementProjectName.innerHTML = lastButtonPressed.innerHTML;
         markSelectedProject(lastButtonPressed);
         return
@@ -625,11 +630,16 @@ export function renderProjectName() {
 
 function markSelectedProject(lastButtonPressed) {
     console.log("function markSelectedProject");
+    /*
     // clear all elements from border
     const allProjects = document.querySelectorAll(".btn-newProject");
-    allProjects.forEach( (project) => {
-        project.style.backgroundColor = "deeppink";
+    
+    allProjects.forEach((project) => {
+        project.classList.remove("btn-selected");
     });
-    // set new border selected project
-    lastButtonPressed.style.backgroundColor = "#1a97ea";
+    
+    
+    // add and remove classes
+    lastButtonPressed.classList.add("btn-selected");
+    */
 }

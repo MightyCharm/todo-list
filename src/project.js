@@ -14,8 +14,8 @@ export function createDefaultProject() {
     const btnDeleteProject = document.querySelector("#btn-deleteProject-0")
     btnDefault.innerHTML = "default";
 
-    btnDefault.addEventListener("click", (btn) => {
-        checkForToDoList(btn);
+    btnDefault.addEventListener("click", (event) => {
+        checkForToDoList(event);
     })
 
     // using closure to call function with event handler,
@@ -28,6 +28,9 @@ export function createDefaultProject() {
     function handleClickEventDeleteProject(btn) {
         openWindowDeleteProject(btn, btnDefault);
     }
+    setLastButtonPressed(btnDefault.id);
+    btnDefault.classList.add("btn-normal");
+    btnDefault.classList.add("btn-hover");
 }
 
 // function creates a new div project and appends to container
@@ -42,7 +45,7 @@ export function createProject() {
     // create new div project
     const btnProject = document.createElement("button");
     btnProject.id = `btn-newProject-${identifier}`;
-    btnProject.className = "btn-newProject";
+    btnProject.className = "btn-newProject btn-normal btn-hover";
     btnProject.innerHTML = input.value;
 
     const btnDeleteProject = document.createElement("button");
