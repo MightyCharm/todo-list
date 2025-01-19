@@ -7,18 +7,44 @@
 }
 
 :root {
-    --button-background: #1a97ea;
-    --button-color: #fff;
-    --button-background-hover: #1887d1;
+    --main-bg: #1f1f1f; /* color should not be visible */
+    --header-bg: rgb(19, 19, 19);
+    --header-col: #fff;
+    /*  */
+    --createProject-bg: rgb(70, 70, 70);
+    --createProject-col: #fff;
+    /*  */
+    --createToDo-bg:  rgb(70, 70, 70);
+    --createToDo-col: #fff;
+    /*  */
+    --projects-bg: rgb(70, 70, 70);
+    --projects-col: #fff;
+    /*  */
+    --window-createProject-bg: rgb(255, 255, 255);
+    --window-createProject-col: #000000;
+    /*  */
+    --window-deleteProject-bg: rgb(255, 255, 255);
+    --window-deleteProject-col: #000000;
+    /*  */
+    --window-createToDo-bg: rgb(255, 255, 255);
+    --window-createToDo-col: #000000;
+    /*  */
+    --todo-bg: #515050;
+    --todo-col: #fff;
+
+    /* --button-background: #1a97ea; */
+    --button-background: #ffffff;
+    --button-color: #464646;
+    --button-background-hover: rgb(38, 38, 38);
     --button-background-disabled: #383636;
-    --button-2-background: deeppink;
+
+    --button-2-background: #1a97ea;
     --button-2-background-hover: rgb(255, 42, 155);
     --background-color-todo-text: rgb(181, 181, 181);
 
     --border-windows: 1px solid #898989;
-    --border-radius: 4px;
-    --background-windows: #2c2c2c;
     --padding-window: 0.6rem;
+    --border-radius: 4px;
 }
 
 body {
@@ -31,17 +57,17 @@ body {
     width: 100vw;
 
     display: grid;
-    grid-template-rows: 1fr 2fr 12fr;
-    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1.5fr 2fr 10fr;
+    grid-template-columns: 1fr 3fr;
     
-    background-color:#000;
+    background-color: var(--main-bg);
     color: #fff;
 }
 
 .header-section,
 .create-project-section,
 .project-section {
-    padding-left: 1rem;
+    /* padding-left: 1rem; */
 }
 /* top container (1row) */
 .header-section {
@@ -50,7 +76,10 @@ body {
     grid-column: 1 / 3;
 
     font-size: 2rem;
-    background-color: rgb(19, 19, 19);
+    /* background-color: var(--header-bg); */
+    color: var(--header-col);
+    border-bottom: 1px solid #fff;
+    padding-left: 1rem;
 }
 
 /* left side container (2row) */
@@ -58,27 +87,33 @@ body {
     grid-row: 2;
     grid-column: 1 / 2;
     align-self: center;
+    justify-self: center;
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
     align-items: center;
 
-    background-color: rgb(19, 19, 19);
-    height: 100%;
-    
+    height: 60%;
+    width: 70%;;
+    background-color: var(--createProject-bg);
+    color: var(--createProject-col);
+    /* border: 1px solid #fff; */
+    border-radius: var(--border-radius);
 }
 
 .create-project-text {
-    text-align: center;
-    font-size: 1.5rem;
-    justify-self: start;
+    margin-left: 0.5rem;
+    font-size: 1.6rem;
 }
 
 .btn-addProject {
     justify-self: start;
-    width: 70px;
-    height: 60px;
-    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.5rem;
+    margin-left: 1rem;
+
     border: none;
     background-color: var(--button-background);
     color: var(--button-color);
@@ -86,6 +121,11 @@ body {
 
 .btn-addProject:hover {
     background-color: var(--button-background-hover);
+   
+    color: #fff;
+    border: 1px solid white;
+    
+    
 }
 
 .btn-addProject:disabled {
@@ -94,11 +134,18 @@ body {
 
 /* create todo section (2row)*/
 .create-todo-section {
+    align-self: center;
     display: grid;
-    grid-template-columns: 1fr 9fr;
+    grid-template-columns: 1fr 1fr;
     justify-items: center;
     align-items: center;
-    background-color: rgb(38, 38, 38);
+    background-color: var(--createToDo-bg);
+    color: var(--createToDo-col);
+
+    /* border: 1px solid #fff; */
+    border-radius: var(--border-radius);
+    width: 20%;
+    height: 60%;
 }
 
 .create-todo-text {
@@ -107,16 +154,18 @@ body {
 
 .btn-addToDo {
     justify-self: start;
-    width: 70px;
-    height: 60px;
-    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     border: none;
+    font-size: 1.5rem;
     background-color: var(--button-background);
     color: var(--button-color);
 }
 
 .btn-addToDo:hover {
     background-color: var(--button-background-hover);
+    color: #fff;
+    border: 1px solid white;
 }
 
 .btn-addToDo:disabled {
@@ -125,33 +174,38 @@ body {
 
 /* text and buttons for projects (3row) */
 .project-section {
+    justify-self: center;
+
     grid-row: 3;
     grid-column: 1 / 2;
     display: grid;
     grid-template-rows: 1fr 10fr;
     justify-items: center;
     align-items: center;
-    /* border-right: 1px solid #fff; */
-    min-width: 300px;
-    background-color: rgb(19, 19, 19);
+    background-color: var(--projects-bg);
+    color: var(--projects-col);
+
+    width: 70%;
+    border-radius: var(--border-radius);
+    /* border: 1px solid white; */
 }
 
 
 .project-displayInfo {
     align-self: center;
-    display: grid;
-    grid-template-columns: 1fr 3fr;
     grid-column: 1/ 3;
-    column-gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    justify-items: center;
     width: 100%;
 }
 
 .project-text{
-    justify-self: start;
     font-size: 1.5rem;
 }
 
-.project-name { 
+.project-name {
+    justify-self: start;
     font-size: 1.5rem;
 }
 
@@ -159,12 +213,12 @@ body {
     align-self: start;
     grid-column: 1/ 3;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 4fr 1fr;
     justify-items: center;
     grid-auto-rows: 30px;
     row-gap: 1rem;
     column-gap: 1rem;
-    width: 100%;
+    width: 90%;
 }
 
 .btn-newProject {
@@ -176,13 +230,19 @@ body {
 }
 
 .btn-newProject:hover {
-    background-color: var(--button-2-background-hover);
-    color: #000;
+    background-color: rgb(19, 19, 19);
+    border: 1px solid white;
+    color: #fff;
 }
 
 .btn-newProject:disabled {
     background-color: var(--button-background-disabled);
     color: white;
+}
+
+.btn-newProject-selected {
+    background-color: white;
+    color: black;
 }
 
 .btn-deleteProject {
@@ -196,7 +256,9 @@ body {
 }
 
 .btn-deleteProject:hover {
-    background-color: rgb(196, 0, 0);
+    /* background-color: rgb(196, 0, 0); */
+    background-color: rgb(38, 38, 38);
+    border: 1px solid #fff;
 }
 
 .btn-deleteProject:disabled {
@@ -215,7 +277,6 @@ body {
     grid-template-rows: 1fr 2fr;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    background-color: var(--background-windows);
     border: var(--border-windows);
     border-radius: var(--border-radius);
     padding: var(--padding-window);
@@ -224,6 +285,8 @@ body {
     min-width: 500px;
     max-width: 600px;
     height: 160px;
+    background-color: var(--window-createProject-bg);
+    color: var(--window-createProject-col);
 }
 
 .create-projectHeader {
@@ -253,8 +316,8 @@ body {
 }
 
 .project-btnSubmit {
-    background-color: var(--button-background);
-    color: var(--button-color);
+    background-color: var(--button-2-background);
+    color: var(--button-background);
     border: none;
     width: 90%;
     height: 100%;
@@ -264,6 +327,7 @@ body {
 
 .project-btnSubmit:hover {
     background-color: var(--button-background-hover);
+    border: 1px solid #fff;
 }
 
 .create-projectBtnClose {
@@ -293,13 +357,14 @@ body {
     grid-template-columns: 2fr 1.4fr;
     align-items: center;
     
-    background-color: var(--background-windows);
     border: var(--border-windows);
     border-radius: var(--border-radius);
     padding: var(--padding-window);
     font-size: 1.2rem;
     width: 440px;
     height: 180px; 
+    background-color: var(--window-deleteProject-bg);
+    color: var(--window-deleteProject-col);
 }
 
 .delete-projectHeader {
@@ -337,14 +402,15 @@ body {
 .delete-projectBtnConfirm {
     width: 70px;
     height: 40px;
-    background-color: var(--button-background);
-    color: var(--button-color);
+    background-color: var(--button-2-background);
+    color: var(--button-background);
     border: none;
     border-radius: var(--border-radius);
 }
 
 .delete-projectBtnConfirm:hover {
     background-color: var(--button-background-hover);
+    border: 1px solid #fff;
 }
 
 .delete-projectBtnConfirm:disabled {
@@ -354,14 +420,15 @@ body {
 .delete-projectBtnDeny {
     width: 70px;
     height: 40px;
-    background-color: var(--button-background);
-    color: var(--button-color);
+    background-color: var(--button-2-background);
+    color: var(--button-background);
     border: none;
     border-radius: var(--border-radius);
 }
 
 .delete-projectBtnDeny:hover {
     background-color: var(--button-background-hover);
+    border: 1px solid #fff;
 }
 
 .delete-projectBtnDeny:disabled {
@@ -379,11 +446,12 @@ body {
     border: var(--border-windows);
     border-radius: var(--border-radius);
     padding: var(--padding-window);
-    background-color: var(background-windows);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 37%;
+    background-color: var(--window-createToDo-bg);
+    color: var(--window-createToDo-col);
 }
 
 .create-todoHeader {
@@ -508,12 +576,13 @@ body {
     height: 100%;
     border: none;
     border-radius: var(--border-radius);
-    background-color: var(--button-background);
-    color: var(--button-color);
+    background-color: var(--button-2-background);
+    color: #fff;
 }
 
 .create-todoSubmit:hover {
     background-color: var(--button-background-hover);
+    border: 1px solid #fff;
 }
 
 
@@ -524,7 +593,7 @@ body {
     justify-items: center;
     /* row-gap: 0.5rem; */
     width: 100%;
-    background-color: rgb(38, 38, 38);
+    background-color: #fff;
     grid-auto-rows: 120px;
     padding-top: 1rem;
 }
@@ -533,7 +602,7 @@ body {
 .todo {
     align-self: start;
     /* border: 1px solid black; */
-    background-color: #515050;
+   
     /* create grid like before */
     display: grid;
     grid-template-columns: 180px 400px 1fr 1fr 1.1fr;
@@ -542,8 +611,9 @@ body {
     height: 100px;
 
     min-width: 900px;
-    border-radius: var(--border-radius)
-
+    border-radius: var(--border-radius);
+    background-color: var(--todo-bg);
+    color: var(--todo-col);
 }
 
 .todo-title {
@@ -664,8 +734,9 @@ body {
 }
 
 .todo-button:hover {
-    background-color: rgb(199, 36, 36);
-    color: white;
+    background-color: rgb(38, 38, 38);
+    border: 1px solid #fff;
+    color: #fff;
 }
 
 .todo-button:disabled {

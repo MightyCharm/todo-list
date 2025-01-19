@@ -45,13 +45,13 @@ export function setColorInputPriority(divPriorityInput, priority) {
     console.log("function getColorInputPriority");
     switch (priority) {
         case "low":
-            divPriorityInput.style.backgroundColor = "blue"
+            divPriorityInput.style.backgroundColor = "#2596be"
             break;
         case "normal":
-            divPriorityInput.style.backgroundColor = "green"
+            divPriorityInput.style.backgroundColor = "#206862"
             break;
         case "high":
-            divPriorityInput.style.backgroundColor = "red";
+            divPriorityInput.style.backgroundColor = "#A23734";
             break;
     }
     divPriorityInput.style.color = "white"

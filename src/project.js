@@ -1,4 +1,4 @@
-import { checkForToDoList, openWindowDeleteProject, renderProjectName } from "./render.js"; // used to add eventlistener
+import { checkForToDoList, openWindowDeleteProject, renderProjectName, markSelectedProject } from "./render.js"; // used to add eventlistener
 import { data } from "./index.js";
 
 /* will be used to create id for buttonProject */
@@ -28,7 +28,9 @@ export function createDefaultProject() {
     function handleClickEventDeleteProject(btn) {
         openWindowDeleteProject(btn, btnDefault);
     }
+    markSelectedProject(btnDefault);
 }
+
 
 // function creates a new div project and appends to container
 export function createProject() {

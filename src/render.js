@@ -623,13 +623,15 @@ export function renderProjectName() {
     elementProjectName.innerHTML = "";
 }
 
-function markSelectedProject(lastButtonPressed) {
+export function markSelectedProject(lastButtonPressed) {
     console.log("function markSelectedProject");
     // clear all elements from border
     const allProjects = document.querySelectorAll(".btn-newProject");
     allProjects.forEach( (project) => {
-        project.style.backgroundColor = "deeppink";
+        project.classList.remove("btn-newProject-selected");
+        // project.style.backgroundColor = "deeppink";
     });
     // set new border selected project
-    lastButtonPressed.style.backgroundColor = "#1a97ea";
+    // lastButtonPressed.style.backgroundColor = "#1a97ea";
+    lastButtonPressed.classList.add("btn-newProject-selected");
 }
