@@ -1,6 +1,6 @@
 /* module renders windows for project and todo creation */
 import { createProject, deleteProject, getLastButtonPressed, setLastButtonPressed } from "./project.js";
-import { getInputNewToDo, setColorInputPriority, deleteToDo, setCheckboxState } from "./todo.js";
+import { getInputNewToDo, setColorInputPriority, deleteToDo, setCheckboxState, appendFeatShowDetails } from "./todo.js";
 import { data } from "./index.js";
 
 // sets button state, if  a window is open buttons in the background are deactivated
@@ -349,16 +349,25 @@ function validateInputToDoWindow(e) {
     closeWindowToDo();
 }
 
-function setButtonState(window) {
+
+export function setButtonState(window) {
+    console.log("function setButtonState");
+    // function called from functions that open/close windows and
+    // eventListener from todo container
     const btnAddProject = document.querySelector("#btn-addProject");
     const btnAddToDo = document.querySelector("#btn-addToDo");
 
     const btnsDeleteProject = document.querySelectorAll(".btn-deleteProject");
     const btnsProjects = document.querySelectorAll(".btn-newProject");
-    const btnsToDo = document.querySelectorAll(".todo-button");
-    const btnsCheckboxToDo = document.querySelectorAll(".todo-checkbox");
 
-    // console.log(window);
+    const toDoList = document.querySelector("#todo-list");
+    const todos = document.querySelectorAll(".todo");
+
+    //------------------------------------------------------------------------------
+    // const btnsToDo = document.querySelectorAll(".todo-button");
+    // const btnsCheckboxToDo = document.querySelectorAll(".todo-checkbox");
+    //------------------------------------------------------------------------------
+
     switch (window) {
         case "openWindow":
             // disable buttons
@@ -370,12 +379,15 @@ function setButtonState(window) {
             btnsDeleteProject.forEach((button) => {
                 button.disabled = true;
             })
-            btnsToDo.forEach((button) => {
-                button.disabled = true;
-            })
-            btnsCheckboxToDo.forEach((button) => {
-                button.disabled = true;
-            })
+
+            //-------------------------------------------------------------------
+            // btnsToDo.forEach((button) => {
+            //     button.disabled = true;
+            // })
+            // btnsCheckboxToDo.forEach((button) => {
+            //     button.disabled = true;
+            // })
+            //-------------------------------------------------------------------
             break;
         case "closeWindow":
             // enable buttons
@@ -388,18 +400,22 @@ function setButtonState(window) {
             btnsDeleteProject.forEach((button) => {
                 button.disabled = false;
             })
-            btnsToDo.forEach((button) => {
-                button.disabled = false;
-            })
-            btnsCheckboxToDo.forEach((button) => {
-                button.disabled = false;
-            })
+
+            //-------------------------------------------------------------------
+            // btnsToDo.forEach((button) => {
+            //     button.disabled = false;
+            // })
+            // btnsCheckboxToDo.forEach((button) => {
+            //     button.disabled = false;
+            // })
+            //-------------------------------------------------------------------
             break;
         default:
             console.log("something went wrong");
     }
 
 }
+
 
 // function takes last button pressed (project) and searches for todos
 // optional argument remove is true if function was called from delete project
@@ -471,7 +487,7 @@ function renderToDoList(obj) {
     descriptionText.className = "todo-description-text";
     descriptionInput.className = "todo-description-input";
     // add id
-    containerDescription.id = "todo-description";
+    containerDescription.id = `todo-description-${todoId}`;
     descriptionText.id = "todo-description-text";
     descriptionInput.id = "todo-description-input";
     // add innerHTML
@@ -519,10 +535,18 @@ function renderToDoList(obj) {
     containerPriority.append(priorityText);
     containerPriority.append(priorityInput);
 
+    divToDo.append(containerTitle);
+    divToDo.append(containerDescription);
+    divToDo.append(containerDueDate);
+    divToDo.append(containerPriority);
+    // divToDo.append(containerCheckboxButton);
+
+    mainContainer.append(divToDo);
+
     // create checkbox
     const containerCheckboxButton = document.createElement("div");
     containerCheckboxButton.className = "todo-checkbox-button";
-    containerCheckboxButton.id = "todo-checkbox-button";
+    containerCheckboxButton.id = `todo-checkbox-button-${todoId}`;
 
     // create left side of todo-checkbox 
     const containerCheckbox = document.createElement("div");
@@ -581,13 +605,7 @@ function renderToDoList(obj) {
     containerCheckboxButton.append(containerCheckbox);
     containerCheckboxButton.append(containerButton);
 
-    divToDo.append(containerTitle);
-    divToDo.append(containerDescription);
-    divToDo.append(containerDueDate);
-    divToDo.append(containerPriority);
-    divToDo.append(containerCheckboxButton);
-
-    mainContainer.append(divToDo);
+    mainContainer.append(containerCheckboxButton);
 
     // change color of text priority
     setColorInputPriority(priorityInput, priority);
@@ -603,8 +621,9 @@ function renderToDoList(obj) {
             checkbox.checked = true;
         }
     }
-
+    appendFeatShowDetails(divToDo.id);
 }
+
 
 export function renderProjectName() {
     console.log("function renderProjectName()");
